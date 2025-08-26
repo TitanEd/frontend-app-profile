@@ -84,7 +84,7 @@ const CustomProfilePage = ({
   console.log('Mapping objects received:', {
     countryMessages,
     languageMessages,
-    educationMessages
+    educationMessages,
   });
 
   // Inserted into the DOM in two places (for responsive layout)
@@ -178,82 +178,84 @@ const CustomProfilePage = ({
       </div>
       <div className="container-fluid">
         {renderPhotoUploadErrorMessage()}
-        <div className="row">
-          <div className="col-12">
-            <div className="card-section mb-4">
-              <div className="card-section-header">
-                <h5 className="card-section-title">Personal Information</h5>
-                <Button 
-                  variant="outline-primary" 
-                  size="sm"
-                  onClick={() => setIsEditingPersonalInfo(!isEditingPersonalInfo)}
-                  className="edit-button"
-                >
-                  {isEditingPersonalInfo ? 'Cancel' : 'Edit'}
-                </Button>
-              </div>
-              <hr className="customHr" />
-              <div className="card-section-content">
-                {!isEditingPersonalInfo ? (
+        {renderAgeMessage()}
+        {!renderAgeMessage() && (
+          <div className="row">
+            <div className="col-12">
+              <div className="card-section mb-4">
+                <div className="card-section-header">
+                  <h5 className="card-section-title">Personal Information</h5>
+                  <Button
+                    variant="outline-primary"
+                    size="sm"
+                    onClick={() => setIsEditingPersonalInfo(!isEditingPersonalInfo)}
+                    className="edit-button"
+                  >
+                    {isEditingPersonalInfo ? 'Cancel' : 'Edit'}
+                  </Button>
+                </div>
+                <hr className="customHr" />
+                <div className="card-section-content">
+                  {!isEditingPersonalInfo ? (
                   // Display view - Column layout
-                  <div className="personal-info-grid">
-                    <div className="info-column">
-                      <div className="info-label">FULL NAME</div>
-                      <div className="info-value">{name || 'Not specified'}</div>
-                    </div>
-                    <div className="info-column">
-                      <div className="info-label">LOCATION</div>
-                      <div className="info-value">{countryMessages[country] || 'Not specified'}</div>
-                    </div>
-                    <div className="info-column">
-                      <div className="info-label">EDUCATION</div>
-                      <div className="info-value">{educationMessages[levelOfEducation] || 'Not specified'}</div>
-                    </div>
-                    <div className="info-column">
-                      <div className="info-label">SOCIAL LINKS</div>
-                      <div className="info-value">
-                        {socialLinks.some(link => link.socialLink) ? (
-                          <span className="social-links-count">{socialLinks.filter(link => link.socialLink).length} links</span>
-                        ) : (
+                    <div className="personal-info-grid">
+                      <div className="info-column">
+                        <div className="info-label">FULL NAME</div>
+                        <div className="info-value">{name || 'Not specified'}</div>
+                      </div>
+                      <div className="info-column">
+                        <div className="info-label">LOCATION</div>
+                        <div className="info-value">{countryMessages[country] || 'Not specified'}</div>
+                      </div>
+                      <div className="info-column">
+                        <div className="info-label">EDUCATION</div>
+                        <div className="info-value">{educationMessages[levelOfEducation] || 'Not specified'}</div>
+                      </div>
+                      <div className="info-column">
+                        <div className="info-label">SOCIAL LINKS</div>
+                        <div className="info-value">
+                          {socialLinks.some(link => link.socialLink) ? (
+                            <span className="social-links-count">{socialLinks.filter(link => link.socialLink).length} links</span>
+                          ) : (
                           <span className="add-link" onClick={() => setIsEditingPersonalInfo(!isEditingPersonalInfo)}>ADD</span>
-                        )}
+                          )}
+                        </div>
+                      </div>
+                      <div className="info-column">
+                        <div className="info-label">PRIMARY LANGUAGE SPOKEN</div>
+                        <div className="info-value">
+                          {languageProficiencies.length > 0 ? languageMessages[languageProficiencies[0].code] : 'Not specified'}
+                        </div>
                       </div>
                     </div>
-                    <div className="info-column">
-                      <div className="info-label">PRIMARY LANGUAGE SPOKEN</div>
-                      <div className="info-value">
-                        {languageProficiencies.length > 0 ? languageMessages[languageProficiencies[0].code] : 'Not specified'}
-                      </div>
-                    </div>
-                  </div>
-                ) : (
+                  ) : (
                   // Edit view - Existing form components
-                  <>
-                    {isNameBlockVisible && (
+                    <>
+                      {isNameBlockVisible && (
                       <Name
                         name={name}
                         visibilityName={visibilityName}
                         formId="name"
                         {...commonFormProps}
                       />
-                    )}
-                    {isLocationBlockVisible && (
+                      )}
+                      {isLocationBlockVisible && (
                       <Country
                         country={country}
                         visibilityCountry={visibilityCountry}
                         formId="country"
                         {...commonFormProps}
                       />
-                    )}
-                    {isEducationBlockVisible && (
+                      )}
+                      {isEducationBlockVisible && (
                       <Education
                         levelOfEducation={levelOfEducation}
                         visibilityLevelOfEducation={visibilityLevelOfEducation}
                         formId="levelOfEducation"
                         {...commonFormProps}
                       />
-                    )}
-                    {isSocialLinksBLockVisible && (
+                      )}
+                      {isSocialLinksBLockVisible && (
                       <SocialLinks
                         socialLinks={socialLinks}
                         draftSocialLinksByPlatform={draftSocialLinksByPlatform}
@@ -261,131 +263,131 @@ const CustomProfilePage = ({
                         formId="socialLinks"
                         {...commonFormProps}
                       />
-                    )}
-                    {isLanguageBlockVisible && (
+                      )}
+                      {isLanguageBlockVisible && (
                       <PreferredLanguage
                         languageProficiencies={languageProficiencies}
                         visibilityLanguageProficiencies={visibilityLanguageProficiencies}
                         formId="languageProficiencies"
                         {...commonFormProps}
                       />
-                    )}
-                  </>
-                )}
+                      )}
+                    </>
+                  )}
+                </div>
               </div>
-            </div>
 
-            {/* About Me Card */}
-            <div className="card-section mb-4">
-              <div className="card-section-header">
-                <h5 className="card-section-title">About Me</h5>
-                {bio ? (
-                  <Button 
-                    variant="outline-primary" 
-                    size="sm"
-                    onClick={() => setIsEditingAboutMe(!isEditingAboutMe)}
-                    className="edit-button"
-                  >
-                    {isEditingAboutMe ? 'Cancel' : 'Edit'}
-                  </Button>
-                ) : (
-                  <Button 
-                    variant={isEditingAboutMe ? 'outline-primary' : 'primary'} 
-                    size="sm"
-                    onClick={() => setIsEditingAboutMe(!isEditingAboutMe)}
-                    className="edit-button"
-                  >
-                    {isEditingAboutMe ? 'Cancel' : 'ADD'}
-                  </Button>
-                )}
-              </div>
-              <hr className="customHr" />
-              <div className="card-section-content">
-                {!isEditingAboutMe ? (
+              {/* About Me Card */}
+              <div className="card-section mb-4">
+                <div className="card-section-header">
+                  <h5 className="card-section-title">About Me</h5>
+                  {bio ? (
+                    <Button
+                      variant="outline-primary"
+                      size="sm"
+                      onClick={() => setIsEditingAboutMe(!isEditingAboutMe)}
+                      className="edit-button"
+                    >
+                      {isEditingAboutMe ? 'Cancel' : 'Edit'}
+                    </Button>
+                  ) : (
+                    <Button
+                      variant={isEditingAboutMe ? 'outline-primary' : 'primary'}
+                      size="sm"
+                      onClick={() => setIsEditingAboutMe(!isEditingAboutMe)}
+                      className="edit-button"
+                    >
+                      {isEditingAboutMe ? 'Cancel' : 'ADD'}
+                    </Button>
+                  )}
+                </div>
+                <hr className="customHr" />
+                <div className="card-section-content">
+                  {!isEditingAboutMe ? (
                   // Display view - Show bio or placeholder
-                  <div className="about-me-content">
-                    {bio ? (
-                      <div className="bio-text">
-                        <p className="bio-paragraph">{bio}</p>
-                      </div>
-                    ) : (
-                      <div className="no-bio-placeholder">
-                        <p className="placeholder-text">No About Me information available</p>
-                      </div>
-                    )}
-                  </div>
-                ) : (
+                    <div className="about-me-content">
+                      {bio ? (
+                        <div className="bio-text">
+                          <p className="bio-paragraph">{bio}</p>
+                        </div>
+                      ) : (
+                        <div className="no-bio-placeholder">
+                          <p className="placeholder-text">No About Me information available</p>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
                   // Edit view - Existing Bio component
-                  isBioBlockVisible && (
+                    isBioBlockVisible && (
                     <Bio
                       bio={bio}
                       visibilityBio={visibilityBio}
                       formId="bio"
                       {...commonFormProps}
                     />
-                  )
-                )}
+                    )
+                  )}
+                </div>
               </div>
-            </div>
 
-            {/* My Certificates Card */}
-            <div className="card-section mb-4">
-              <div className="card-section-header">
-                <h5 className="card-section-title">My Certificates</h5>
-                {courseCertificates && courseCertificates.length > 0 ? (
-                  <Button 
-                    variant="outline-primary" 
-                    size="sm"
-                    onClick={() => setIsEditingCertificates(!isEditingCertificates)}
-                    className="edit-button"
-                  >
-                    {isEditingCertificates ? 'Cancel' : 'Edit'}
-                  </Button>
-                ) : (
-                  <Button 
-                    variant={isEditingCertificates ? 'outline-primary' : 'primary'} 
-                    size="sm"
-                    onClick={() => setIsEditingCertificates(!isEditingCertificates)}
-                    className="edit-button"
-                  >
-                    {isEditingCertificates ? 'Cancel' : 'ADD'}
-                  </Button>
-                )}
-              </div>
-              <hr className="customHr" />
-              <div className="card-section-content">
-                {!isEditingCertificates ? (
+              {/* My Certificates Card */}
+              <div className="card-section mb-4">
+                <div className="card-section-header">
+                  <h5 className="card-section-title">My Certificates</h5>
+                  {courseCertificates && courseCertificates.length > 0 ? (
+                    <Button
+                      variant="outline-primary"
+                      size="sm"
+                      onClick={() => setIsEditingCertificates(!isEditingCertificates)}
+                      className="edit-button"
+                    >
+                      {isEditingCertificates ? 'Cancel' : 'Edit'}
+                    </Button>
+                  ) : (
+                    <Button
+                      variant={isEditingCertificates ? 'outline-primary' : 'primary'}
+                      size="sm"
+                      onClick={() => setIsEditingCertificates(!isEditingCertificates)}
+                      className="edit-button"
+                    >
+                      {isEditingCertificates ? 'Cancel' : 'ADD'}
+                    </Button>
+                  )}
+                </div>
+                <hr className="customHr" />
+                <div className="card-section-content">
+                  {!isEditingCertificates ? (
                   // Display view - Show certificates or placeholder
-                  <div className="certificates-content">
-                    {courseCertificates && courseCertificates.length > 0 ? (
-                      <div className="certificates-list">
-                        {courseCertificates.map((certificate, index) => (
-                          <div key={index} className="certificate-item">
+                    <div className="certificates-content">
+                      {courseCertificates && courseCertificates.length > 0 ? (
+                        <div className="certificates-list">
+                          {courseCertificates.map((certificate, index) => (
+                            <div key={index} className="certificate-item">
                             <h6 className="certificate-title">{certificate.title}</h6>
                           </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="no-certificates-placeholder">
-                        <p className="placeholder-text">You don't have any certificates yet.</p>
-                      </div>
-                    )}
-                  </div>
-                ) : (
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="no-certificates-placeholder">
+                          <p className="placeholder-text">You don't have any certificates yet.</p>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
                   // Edit view - Existing Certificates component
-                  isCertificatesBlockVisible && (
+                    isCertificatesBlockVisible && (
                     <Certificates
                       visibilityCourseCertificates={visibilityCourseCertificates}
                       formId="certificates"
                       {...commonFormProps}
                     />
-                  )
-                )}
+                    )
+                  )}
+                </div>
               </div>
-            </div>
 
-            {/* Learning Goal Card */}
-            {enableSkillsBuilderProfile && (
+              {/* Learning Goal Card */}
+              {enableSkillsBuilderProfile && (
               <div className="card-section mb-4">
                 <div className="card-section-header">
                   <h5 className="card-section-title">Learning Goal</h5>
@@ -400,9 +402,10 @@ const CustomProfilePage = ({
                   />
                 </div>
               </div>
-            )}
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
