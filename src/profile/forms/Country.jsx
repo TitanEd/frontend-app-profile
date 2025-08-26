@@ -58,6 +58,7 @@ class Country extends React.Component {
       sortedCountries,
       countryMessages,
     } = this.props;
+    console.log(countryMessages);
 
     return (
       <SwitchContent
