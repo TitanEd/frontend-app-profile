@@ -15,7 +15,7 @@ const EditableItemHeader = ({
   <div className="editable-item-header mb-2">
     <h2 className="edit-section-header" id={headingId}>
       {content}
-      {showEditButton ? <EditButton style={{ marginTop: '-.35rem' }} className="float-right px-0" onClick={onClickEdit} /> : null}
+      {showEditButton ? <EditButton style={{ marginTop: '-.35rem' }} className="float-right" onClick={onClickEdit} /> : null}
     </h2>
     {showVisibility ? <p className="mb-0"><Visibility to={visibility} /></p> : null}
   </div>

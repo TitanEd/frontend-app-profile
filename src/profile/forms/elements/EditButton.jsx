@@ -11,7 +11,7 @@ const EditButton = ({
   onClick, className, style, intl,
 }) => (
   <Button
-    variant="link"
+    variant="primary"
     size="sm"
     className={className}
     onClick={onClick}

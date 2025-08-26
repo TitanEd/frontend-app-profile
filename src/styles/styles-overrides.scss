@@ -1,0 +1,100 @@
+// Mixins
+@mixin card-style1 {
+    border-radius: 1rem;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-surface);
+}
+
+@mixin card-style2 {
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-surface);
+}
+
+@mixin card-style3 {
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-surface);
+}
+
+@mixin sub-header-title-style1 {
+    font-size: 20px !important;
+    font-weight: 600 !important;
+    line-height: 1.2 !important;
+    letter-spacing: normal !important;
+}
+
+@mixin section-title-style1 {
+    font-size: 18px !important;
+    font-weight: 500 !important;
+    line-height: 1.2 !important;
+    letter-spacing: normal !important;
+}
+
+@mixin section-title-style2 {
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    line-height: 1.2 !important;
+    letter-spacing: normal !important;
+}
+
+@mixin section-title-style3 {
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    line-height: 1.2 !important;
+    letter-spacing: normal !important;
+}
+
+.customHr {
+    border: 'none';
+    border-top: '1px solid #e5e6e6', ;
+    margin: '0 0 0 0';
+    margin-left: -1rem;
+    margin-right: -1rem;
+}
+
+.profile-page {
+    padding: 1rem;
+
+    .profile-avatar {
+        @media (min-width: 768px) {
+            width: 9rem !important;
+            height: 9rem !important;
+        }
+    }
+
+    .profile-avatar-wrap {
+        @media (min-width: 768px) {
+          max-width: 12rem;
+          margin-right: 0;
+          margin-top: -3rem !important;
+          margin-bottom: 2rem;
+        }
+    }
+
+    
+}
+
+.profile-page-container {
+    padding-left: 4rem;
+    padding-right: 4rem;
+    // background-color: blue;
+}
+
+.profile-page-bg-banner {
+    border-radius: 8px !important;
+}
+
+.card-section {
+    @include card-style2;
+    padding: 1rem;
+
+    .card-section-title {
+        @include section-title-style1;
+    }
+}
+
+.edit-section-header {
+    // display: none !important;
+    @include section-title-style2;
+}

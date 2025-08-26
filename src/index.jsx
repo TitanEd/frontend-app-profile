@@ -16,26 +16,27 @@ import {
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Header from '@edx/frontend-component-header';
-import FooterSlot from '@openedx/frontend-slot-footer';
+import Layout from './Layout';
 
 import messages from './i18n';
 import configureStore from './data/configureStore';
 
 import './index.scss';
+import './styles/styles-overrides.scss';
+// import './Layout.scss';
 import Head from './head/Head';
 
 import AppRoutes from './routes/AppRoutes';
+
+import 'titaned-lib/dist/index.css';
 
 subscribe(APP_READY, () => {
   ReactDOM.render(
     <AppProvider store={configureStore()}>
       <Head />
-      <Header />
-      <main id="main">
+      <Layout>
         <AppRoutes />
-      </main>
-      <FooterSlot />
+      </Layout>
     </AppProvider>,
     document.getElementById('root'),
   );
