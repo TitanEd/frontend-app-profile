@@ -81,6 +81,9 @@ const CustomProfilePage = ({
     return isAgeOrNotCompliant && getConfig().COLLECT_YEAR_OF_BIRTH !== 'true';
   };
 
+  console.log('courseCertificates', courseCertificates);
+  console.log('visibilityCourseCertificates', visibilityCourseCertificates);
+
   console.log('Mapping objects received:', {
     countryMessages,
     languageMessages,

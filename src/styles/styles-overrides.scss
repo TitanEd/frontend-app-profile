@@ -79,6 +79,11 @@
     padding-left: 4rem;
     padding-right: 4rem;
     // background-color: blue;
+
+    @media (max-width: 768px) {
+        padding-left: 0;
+        padding-right: 0;
+    }
 }
 
 .profile-page-bg-banner {
@@ -324,5 +329,10 @@
                 font-size: 14px;
             }
         }
+    }
+
+    .custom-profile-page-fluid-container {
+        padding-left: 0;
+        padding-right: 0;
     }
 }
