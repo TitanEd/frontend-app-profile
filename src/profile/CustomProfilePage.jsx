@@ -366,7 +366,7 @@ const CustomProfilePage = ({
                         <div className="certificates-list">
                           {courseCertificates.map((certificate, index) => (
                             <div key={index} className="certificate-item">
-                            <h6 className="certificate-title">{certificate.title}</h6>
+                            <h6 className="certificate-title">{certificate.courseDisplayName}</h6>
                           </div>
                           ))}
                         </div>
