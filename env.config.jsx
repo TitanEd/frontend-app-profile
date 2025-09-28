@@ -5,7 +5,7 @@ import CustomProfilePage from './src/profile/CustomProfilePage';
 const config = {
   ...process.env,
   pluginSlots: {
-    profile_page_plugin_slot: {
+    profile_page_plugin_slott: {
       plugins: [
         {
           op: PLUGIN_OPERATIONS.Insert,

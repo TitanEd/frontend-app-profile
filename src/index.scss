@@ -11,6 +11,23 @@ body {
     overflow: hidden;
 }
 
+html, body.new-ui {
+    overflow: hidden !important; /* Prevent outer scrollbar for new UI */
+  }
+  
+  /* Allow scrolling for old UI */
+  html, body.old-ui {
+    overflow: auto !important; /* Allow scrolling for old UI */
+  }
+  
+  html.old-ui {
+    overflow: auto !important; /* Allow scrolling for old UI */
+  }
+  
+  html.new-ui {
+    overflow: hidden !important; /* Prevent outer scrollbar for new UI */
+  }
+
 .app-container {
     display: flex;
     flex-direction: column;
