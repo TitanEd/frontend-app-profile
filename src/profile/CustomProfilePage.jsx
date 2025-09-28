@@ -179,7 +179,7 @@ const CustomProfilePage = ({
           </div>
         </div>
       </div>
-      <div className="container-fluid">
+      <div className="container-fluid custom-profile-page-fluid-container">
         {renderPhotoUploadErrorMessage()}
         {renderAgeMessage()}
         {!renderAgeMessage() && (
