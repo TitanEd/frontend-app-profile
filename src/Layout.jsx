@@ -1,3 +1,5 @@
+/* eslint-disable import/extensions */
+/* eslint-disable no-console */
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation, useNavigate } from 'react-router';
@@ -7,8 +9,10 @@ import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import {
   Analytics, Assignment, Assistant, Calendar, FolderShared, Home, LibraryAdd, LibraryBooks, Lightbulb, LmsBook,
 } from '@openedx/paragon/icons';
+import { Spinner } from '@openedx/paragon';
 import getUserMenuItems from './library/utils/getUserMenuItems.ts';
 import './index.scss';
+import { setUIPreference } from './services/uiPreferenceService.js';
 
 // API to fetch sidebar items
 const fetchNavigationItems = async () => {
@@ -37,8 +41,8 @@ const Layout = ({ children }) => {
 
   const handleLanguageChange = () => {
     const { pathname } = location;
-    const cleanPath = pathname.replace('/account', '');
-    window.location.href = `/account${cleanPath}`;
+    const cleanPath = pathname.replace('/profile', '');
+    window.location.href = `/profile${cleanPath}`;
   };
 
   const [sidebarItems, setSidebarItems] = useState([
@@ -136,6 +140,12 @@ const Layout = ({ children }) => {
               icon: <Assignment />,
               isVisible: true, // Always visible
             },
+            {
+              label: 'Switch to Old View',
+              path: 'switch-to-old-view',
+              icon: <FolderShared />,
+              isVisible: true,
+            },
           ];
 
           // Filter visible items and remove the isVisible property
@@ -228,6 +238,12 @@ const Layout = ({ children }) => {
             icon: <Assignment />,
             isVisible: true,
           },
+          {
+            label: 'Switch to Old View',
+            path: 'switch-to-old-view',
+            icon: <FolderShared />,
+            isVisible: true,
+          },
         ];
 
         // Filter visible items and remove the isVisible property
@@ -258,8 +274,23 @@ const Layout = ({ children }) => {
     };
   }, []);
 
-  const handleNavigate = (path) => {
-    navigate(path);
+  const handleNavigate = async (path) => {
+    if (path === 'switch-to-old-view') {
+      try {
+        console.log('Switching to old UI...');
+        const success = await setUIPreference(false);
+        if (success) {
+          console.log('Successfully switched to old UI, reloading page...');
+          window.location.reload();
+        } else {
+          console.error('Failed to switch to old UI');
+        }
+      } catch (error) {
+        console.error('Error switching to old UI:', error);
+      }
+    } else {
+      navigate(path);
+    }
   };
 
   return (
@@ -283,7 +314,9 @@ const Layout = ({ children }) => {
         <div className="content-wrapper">
           <div className="sidebar-container">
             {loadingSidebar ? (
-              <div>Loading menu...</div>
+              <div className="d-flex justify-content-center" style={{ height: '100%', width: '80px', paddingTop: '1rem' }}>
+                <Spinner animation="border" variant="primary" />
+              </div>
             ) : (
               <Sidebar
                 buttons={sidebarItems}

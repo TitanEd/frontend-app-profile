@@ -2,10 +2,13 @@ import React from 'react';
 import { DIRECT_PLUGIN, PLUGIN_OPERATIONS } from '@openedx/frontend-plugin-framework';
 import CustomProfilePage from './src/profile/CustomProfilePage';
 
-const config = {
-  ...process.env,
-  pluginSlots: {
-    profile_page_plugin_slott: {
+const getPluginSlots = () => {
+  if (typeof window !== 'undefined' && localStorage.getItem('oldUI') === 'true') {
+    return {};
+  }
+
+  return {
+    profile_page_plugin_slot: {
       plugins: [
         {
           op: PLUGIN_OPERATIONS.Insert,
@@ -18,6 +21,14 @@ const config = {
         },
       ],
     },
+  };
+};
+
+// Load environment variables from .env file
+const config = {
+  ...process.env,
+  get pluginSlots() {
+    return getPluginSlots();
   },
 };
 

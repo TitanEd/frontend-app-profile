@@ -66,7 +66,7 @@ const App = () => {
     const loadUIPreferenceAndMenuConfig = async () => {
       try {
         // First, load from localStorage for immediate display
-        const localStorageValue = localStorage.getItem('oldUI') || 'true';
+        const localStorageValue = localStorage.getItem('oldUI') || 'false';
         console.log('Initial localStorage oldUI:', localStorageValue);
         setOldUI(localStorageValue);
         setLoading(false);
