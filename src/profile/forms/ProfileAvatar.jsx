@@ -73,7 +73,7 @@ class ProfileAvatar extends React.Component {
 
     return (
       <Dropdown>
-        <Dropdown.Toggle>
+        <Dropdown.Toggle className="custom-profile-avatar-dropdown-toggle">
           {intl.formatMessage(messages['profile.profileavatar.change-button'])}
         </Dropdown.Toggle>
         <Dropdown.Menu>

@@ -10,19 +10,43 @@ import {
   Analytics, Assignment, Assistant, Calendar, FolderShared, Home, LibraryAdd, LibraryBooks, Lightbulb, LmsBook,
 } from '@openedx/paragon/icons';
 import { Spinner } from '@openedx/paragon';
+import { getConfig } from '@edx/frontend-platform';
 import getUserMenuItems from './library/utils/getUserMenuItems.ts';
 import './index.scss';
 import { setUIPreference } from './services/uiPreferenceService.js';
 
 // API to fetch sidebar items
 const fetchNavigationItems = async () => {
-  const response = await getAuthenticatedHttpClient().get('https://staging.titaned.com/titaned/api/v1/menu-config/');
+  try {
+    const response = await getAuthenticatedHttpClient().get(`${getConfig().STUDIO_BASE_URL}/titaned/api/v1/menu-config/`);
+    // const response = await getAuthenticatedHttpClient().get(
+    //   'https://staging.titaned.com/titaned/api/v1/menu-config/'
+    // );
 
-  if (response.status !== 200) {
-    throw new Error('Failed to fetch Navigation Items');
+    // https://staging.titaned.com
+    if (response.status !== 200) {
+      throw new Error('Failed to fetch Navigation Items');
+    }
+
+    return response.data;
+  } catch (error) {
+    console.warn('Failed to fetch navigation items, using defaults:', error);
+    // Return default values when API fails
+    return {
+      allow_to_create_new_course: false,
+      show_class_planner: false,
+      show_insights_and_reports: false,
+      assistant_is_enabled: false,
+      resources_is_enabled: false,
+      enable_search_in_header: false,
+      enabled_re_sync: false,
+      enable_switch_to_learner: false,
+      enable_help_center: false,
+      language_selector_is_enabled: false,
+      notification_is_enabled: false,
+      enabled_languages: [],
+    };
   }
-
-  return response.data;
 };
 
 const Layout = ({ children }) => {
@@ -32,6 +56,8 @@ const Layout = ({ children }) => {
   const { LMS_BASE_URL, LOGOUT_URL } = config;
 
   const [loadingSidebar, setLoadingSidebar] = useState(true);
+  const [headerButtons, setHeaderButtons] = useState({});
+  const [languageSelectorList, setLanguageSelectorList] = useState([]);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -155,15 +181,19 @@ const Layout = ({ children }) => {
 
           setSidebarItems(visibleSidebarItems);
 
-          // const headerButtonsConfig = {
-          //   reSync: true,
-          //   contextSwitcher: true,
-          //   help: true,
-          //   translation: menuConfig.language_selector_is_enabled || false,
-          //   notification: menuConfig.notification_is_enabled || false,
-          // };
+          const headerButtonsConfig = {
+            reSync: menuConfig.enabled_re_sync || false,
+            contextSwitcher: menuConfig.enable_switch_to_learner || false,
+            help: menuConfig.enable_help_center || false,
+            translation: menuConfig.language_selector_is_enabled || false,
+            notification: menuConfig.notification_is_enabled || false,
+          };
 
-          // setHeaderButtons(headerButtonsConfig);
+          setHeaderButtons(headerButtonsConfig);
+
+          if (menuConfig.enabled_languages) {
+            setLanguageSelectorList(menuConfig.enabled_languages);
+          }
         }
       } catch (error) {
         // Fallback to always-visible items when API fails
@@ -253,15 +283,17 @@ const Layout = ({ children }) => {
 
         setSidebarItems(visibleFallbackItems);
 
-        // const fallbackHeaderButtonsConfig = {
-        //   reSync: true,
-        //   contextSwitcher: true,
-        //   help: true,
-        //   translation: false,
-        //   notification: false,
-        // };
+        const fallbackHeaderButtonsConfig = {
+          reSync: true,
+          contextSwitcher: true,
+          help: true,
+          translation: false,
+          notification: false,
+        };
 
-        // setHeaderButtons(fallbackHeaderButtonsConfig);
+        setHeaderButtons(fallbackHeaderButtonsConfig);
+
+        setLanguageSelectorList([]);
       } finally {
         setLoadingSidebar(false);
       }
@@ -299,7 +331,7 @@ const Layout = ({ children }) => {
       <SidebarProvider>
         <div className="header-container">
           <MainHeader
-            logoUrl="/titanEd_logo.png"
+            logoUrl={config.LOGO_URL}
               // menuAlignment={headerData.menu.align}
               // menuList={headerData.menu.menuList}
               // loginSignupButtons={headerData.menu.loginSignupButtons}
@@ -307,7 +339,8 @@ const Layout = ({ children }) => {
             userMenuItems={userMenuItems}
             onLanguageChange={handleLanguageChange}
             getBaseUrl={() => '/learning'}
-            // headerButtons={headerButtons}
+            headerButtons={headerButtons}
+            languageSelectorList={languageSelectorList}
           />
         </div>
         {/* Sidebar and Main Content */}

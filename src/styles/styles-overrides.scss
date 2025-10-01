@@ -259,6 +259,18 @@
     }
 }
 
+.card-section-content {
+    .btn-sm {
+        padding: 0.5rem 1rem !important;
+    }
+
+    .custom-statefull-button {
+        .btn-sm {
+            padding: 0.5rem 1rem !important;
+        }
+    }
+}
+
 // Responsive design for mobile
 @media (max-width: 768px) {
     .personal-info-grid {
@@ -292,7 +304,7 @@
 
         .bio-text {
             .bio-paragraph {
-                font-size: 14px;
+                font-size: 18px;
             }
         }
 
@@ -334,5 +346,13 @@
     .custom-profile-page-fluid-container {
         padding-left: 0;
         padding-right: 0;
+    }
+
+    .profile-avatar-menu-container {
+        .custom-profile-avatar-dropdown-toggle {
+            padding: 0.5rem 1rem !important;
+            margin-left: 12rem !important;
+            font-size: 14px !important;
+        }
     }
 }
