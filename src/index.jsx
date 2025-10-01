@@ -21,6 +21,7 @@ import ReactDOM from 'react-dom';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import Header from '@edx/frontend-component-header';
 import FooterSlot from '@openedx/frontend-slot-footer';
+import { getMessages, IntlProvider } from '@edx/frontend-platform/i18n';
 import Layout from './Layout';
 
 import messages from './i18n';
@@ -152,7 +153,12 @@ const App = () => {
 };
 
 subscribe(APP_READY, () => {
-  ReactDOM.render(<App />, document.getElementById('root'));
+  ReactDOM.render(
+    <IntlProvider locale={getConfig().language || 'en'} messages={getMessages()}>
+      <App />
+    </IntlProvider>,
+    document.getElementById('root'),
+  );
 });
 
 subscribe(APP_INIT_ERROR, (error) => {
