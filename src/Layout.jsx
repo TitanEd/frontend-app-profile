@@ -338,7 +338,7 @@ const Layout = ({ children }) => {
             authenticatedUser={authenticatedUser}
             userMenuItems={userMenuItems}
             onLanguageChange={handleLanguageChange}
-            getBaseUrl={() => '/learning'}
+            // getBaseUrl={() => ''}
             headerButtons={headerButtons}
             languageSelectorList={languageSelectorList}
           />
