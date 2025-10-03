@@ -23,6 +23,7 @@ import LearningGoal from './forms/LearningGoal';
 
 // i18n
 import messages from './ProfilePage.messages';
+import customProfileMessages from './CustomProfilePage.messages';
 
 const CustomProfilePage = ({
   // Profile data
@@ -187,14 +188,14 @@ const CustomProfilePage = ({
             <div className="col-12">
               <div className="card-section mb-4">
                 <div className="card-section-header">
-                  <h5 className="card-section-title">Personal Information</h5>
+                  <h5 className="card-section-title">{intl.formatMessage(customProfileMessages['profile.personalInformation.title'])}</h5>
                   <Button
                     variant="outline-primary"
                     size="sm"
                     onClick={() => setIsEditingPersonalInfo(!isEditingPersonalInfo)}
                     className="edit-button"
                   >
-                    {isEditingPersonalInfo ? 'Cancel' : 'Edit'}
+                    {isEditingPersonalInfo ? intl.formatMessage(customProfileMessages['profile.personalInformation.cancel']) : intl.formatMessage(customProfileMessages['profile.personalInformation.edit'])}
                   </Button>
                 </div>
                 <hr className="customHr" />
@@ -203,31 +204,31 @@ const CustomProfilePage = ({
                   // Display view - Column layout
                     <div className="personal-info-grid">
                       <div className="info-column">
-                        <div className="info-label">FULL NAME</div>
-                        <div className="info-value">{name || 'Not specified'}</div>
+                        <div className="info-label">{intl.formatMessage(customProfileMessages['profile.personalInformation.fullName'])}</div>
+                        <div className="info-value">{name || intl.formatMessage(customProfileMessages['profile.personalInformation.notSpecified'])}</div>
                       </div>
                       <div className="info-column">
-                        <div className="info-label">LOCATION</div>
-                        <div className="info-value">{countryMessages[country] || 'Not specified'}</div>
+                        <div className="info-label">{intl.formatMessage(customProfileMessages['profile.personalInformation.location'])}</div>
+                        <div className="info-value">{countryMessages[country] || intl.formatMessage(customProfileMessages['profile.personalInformation.notSpecified'])}</div>
                       </div>
                       <div className="info-column">
-                        <div className="info-label">EDUCATION</div>
-                        <div className="info-value">{educationMessages[levelOfEducation] || 'Not specified'}</div>
+                        <div className="info-label">{intl.formatMessage(customProfileMessages['profile.personalInformation.education'])}</div>
+                        <div className="info-value">{educationMessages[levelOfEducation] || intl.formatMessage(customProfileMessages['profile.personalInformation.notSpecified'])}</div>
                       </div>
                       <div className="info-column">
-                        <div className="info-label">SOCIAL LINKS</div>
+                        <div className="info-label">{intl.formatMessage(customProfileMessages['profile.personalInformation.socialLinks'])}</div>
                         <div className="info-value">
                           {socialLinks.some(link => link.socialLink) ? (
-                            <span className="social-links-count">{socialLinks.filter(link => link.socialLink).length} links</span>
+                            <span className="social-links-count">{intl.formatMessage(customProfileMessages['profile.personalInformation.linksCount'], { count: socialLinks.filter(link => link.socialLink).length })}</span>
                           ) : (
-                          <span className="add-link" onClick={() => setIsEditingPersonalInfo(!isEditingPersonalInfo)}>ADD</span>
+                          <span className="add-link" onClick={() => setIsEditingPersonalInfo(!isEditingPersonalInfo)}>{intl.formatMessage(customProfileMessages['profile.personalInformation.add'])}</span>
                           )}
                         </div>
                       </div>
                       <div className="info-column">
-                        <div className="info-label">PRIMARY LANGUAGE SPOKEN</div>
+                        <div className="info-label">{intl.formatMessage(customProfileMessages['profile.personalInformation.primaryLanguage'])}</div>
                         <div className="info-value">
-                          {languageProficiencies.length > 0 ? languageMessages[languageProficiencies[0].code] : 'Not specified'}
+                          {languageProficiencies.length > 0 ? languageMessages[languageProficiencies[0].code] : intl.formatMessage(customProfileMessages['profile.personalInformation.notSpecified'])}
                         </div>
                       </div>
                     </div>
@@ -283,7 +284,7 @@ const CustomProfilePage = ({
               {/* About Me Card */}
               <div className="card-section mb-4">
                 <div className="card-section-header">
-                  <h5 className="card-section-title">About Me</h5>
+                  <h5 className="card-section-title">{intl.formatMessage(customProfileMessages['profile.aboutMe.title'])}</h5>
                   {bio ? (
                     <Button
                       variant="outline-primary"
@@ -291,7 +292,7 @@ const CustomProfilePage = ({
                       onClick={() => setIsEditingAboutMe(!isEditingAboutMe)}
                       className="edit-button"
                     >
-                      {isEditingAboutMe ? 'Cancel' : 'Edit'}
+                      {isEditingAboutMe ? intl.formatMessage(customProfileMessages['profile.aboutMe.cancel']) : intl.formatMessage(customProfileMessages['profile.aboutMe.edit'])}
                     </Button>
                   ) : (
                     <Button
@@ -300,7 +301,7 @@ const CustomProfilePage = ({
                       onClick={() => setIsEditingAboutMe(!isEditingAboutMe)}
                       className="edit-button"
                     >
-                      {isEditingAboutMe ? 'Cancel' : 'ADD'}
+                      {isEditingAboutMe ? intl.formatMessage(customProfileMessages['profile.aboutMe.cancel']) : intl.formatMessage(customProfileMessages['profile.aboutMe.add'])}
                     </Button>
                   )}
                 </div>
@@ -315,7 +316,7 @@ const CustomProfilePage = ({
                         </div>
                       ) : (
                         <div className="no-bio-placeholder">
-                          <p className="placeholder-text">No About Me information available</p>
+                          <p className="placeholder-text">{intl.formatMessage(customProfileMessages['profile.aboutMe.noInformation'])}</p>
                         </div>
                       )}
                     </div>
@@ -336,7 +337,7 @@ const CustomProfilePage = ({
               {/* My Certificates Card */}
               <div className="card-section mb-4">
                 <div className="card-section-header">
-                  <h5 className="card-section-title">My Certificates</h5>
+                  <h5 className="card-section-title">{intl.formatMessage(customProfileMessages['profile.certificates.title'])}</h5>
                   {courseCertificates && courseCertificates.length > 0 ? (
                     <Button
                       variant="outline-primary"
@@ -344,7 +345,7 @@ const CustomProfilePage = ({
                       onClick={() => setIsEditingCertificates(!isEditingCertificates)}
                       className="edit-button"
                     >
-                      {isEditingCertificates ? 'Cancel' : 'Edit'}
+                      {isEditingCertificates ? intl.formatMessage(customProfileMessages['profile.certificates.cancel']) : intl.formatMessage(customProfileMessages['profile.certificates.edit'])}
                     </Button>
                   ) : (
                     <Button
@@ -353,7 +354,7 @@ const CustomProfilePage = ({
                       onClick={() => setIsEditingCertificates(!isEditingCertificates)}
                       className="edit-button"
                     >
-                      {isEditingCertificates ? 'Cancel' : 'ADD'}
+                      {isEditingCertificates ? intl.formatMessage(customProfileMessages['profile.certificates.cancel']) : intl.formatMessage(customProfileMessages['profile.certificates.add'])}
                     </Button>
                   )}
                 </div>
@@ -372,7 +373,7 @@ const CustomProfilePage = ({
                         </div>
                       ) : (
                         <div className="no-certificates-placeholder">
-                          <p className="placeholder-text">You don't have any certificates yet.</p>
+                          <p className="placeholder-text">{intl.formatMessage(customProfileMessages['profile.certificates.noCertificates'])}</p>
                         </div>
                       )}
                     </div>
@@ -393,7 +394,7 @@ const CustomProfilePage = ({
               {enableSkillsBuilderProfile && (
               <div className="card-section mb-4">
                 <div className="card-section-header">
-                  <h5 className="card-section-title">Learning Goal</h5>
+                  <h5 className="card-section-title">{intl.formatMessage(customProfileMessages['profile.learningGoal.title'])}</h5>
                   <hr className="customHr" />
                 </div>
                 <div className="card-section-content">
@@ -470,6 +471,9 @@ CustomProfilePage.propTypes = {
 
   // i18n
   intl: PropTypes.object.isRequired,
+  countryMessages: PropTypes.object,
+  languageMessages: PropTypes.object,
+  educationMessages: PropTypes.object,
 };
 
 CustomProfilePage.defaultProps = {
