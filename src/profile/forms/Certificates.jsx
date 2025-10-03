@@ -83,7 +83,7 @@ class Certificates extends React.Component {
                   messages['profile.certificates.types.unknown'],
                 ))}
               </p>
-              <h4 className="certificate-title">{courseDisplayName}</h4>
+              <h4 className="certificate-title custom-certificate-title-edit-mode">{courseDisplayName}</h4>
             </div>
             <p className="small mb-0">
               <FormattedMessage
@@ -91,7 +91,7 @@ class Certificates extends React.Component {
                 defaultMessage="From"
               />
             </p>
-            <p className="h6 mb-4">{courseOrganization}</p>
+            <p className="h6 mb-4 custom-certificate-organization-edit-mode">{courseOrganization}</p>
             <div className="flex-grow-1" />
             <p className="small mb-2">
               <FormattedMessage

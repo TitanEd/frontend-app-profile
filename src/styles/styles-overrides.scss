@@ -146,7 +146,7 @@
         .info-label {
             font-size: 12px;
             font-weight: 500;
-            color: #6c757d;
+            color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin-bottom: 0.5rem;
@@ -155,19 +155,19 @@
         .info-value {
             font-size: 16px;
             font-weight: 600;
-            color: #212529;
+            color: var(--text-primary);
             line-height: 1.2;
             word-break: break-word;
         }
 
         .add-link {
-            color: #007bff;
+            color: var(--primary);
             font-weight: 600;
             cursor: pointer;
             text-decoration: underline;
 
             &:hover {
-                color: #0056b3;
+                color: var(--primary-hover);
             }
         }
 
@@ -269,6 +269,32 @@
             padding: 0.5rem 1rem !important;
         }
     }
+
+    .list-unstyled {
+        a {
+            color: var(--primary);
+
+            &:hover {
+                color: var(--primary-hover);
+            }
+        }
+    }
+}
+
+.custom-certificate-title-edit-mode {
+    color: var(--text-primary) !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    line-height: 1.2 !important;
+    font-family: sans-serif !important;
+}
+
+.custom-certificate-organization-edit-mode {
+    color: var(--text-primary) !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    line-height: 1.2 !important;
+    font-family: sans-serif !important;
 }
 
 // Responsive design for mobile
