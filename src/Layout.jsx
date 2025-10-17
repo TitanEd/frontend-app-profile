@@ -9,8 +9,10 @@ import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import {
   Analytics, Assignment, Assistant, Calendar, FolderShared, Home, LibraryAdd, LibraryBooks, Lightbulb, LmsBook,
 } from '@openedx/paragon/icons';
+import { useIntl } from '@edx/frontend-platform/i18n';
 import { Spinner } from '@openedx/paragon';
 import { getConfig } from '@edx/frontend-platform';
+import messages from './messages';
 import getUserMenuItems from './library/utils/getUserMenuItems.ts';
 import './index.scss';
 import { setUIPreference } from './services/uiPreferenceService.js';
@@ -55,6 +57,8 @@ const Layout = ({ children }) => {
   console.log('config', config);
   const { LMS_BASE_URL, LOGOUT_URL } = config;
 
+  const intl = useIntl();
+
   const [loadingSidebar, setLoadingSidebar] = useState(true);
   const [headerButtons, setHeaderButtons] = useState({});
   const [languageSelectorList, setLanguageSelectorList] = useState([]);
@@ -74,7 +78,7 @@ const Layout = ({ children }) => {
   const [sidebarItems, setSidebarItems] = useState([
     {
       label: 'Home',
-      path: '/home',
+      path: '/',
       icon: <Home />,
     },
   ]);
@@ -97,77 +101,78 @@ const Layout = ({ children }) => {
           // Define all sidebar items with their visibility conditions
           const sidebarItemsConfig = [
             {
-              // label: intl.formatMessage(messages.sidebarDashboardTitle),
-              label: 'Home',
-              path: '/home',
+              label: intl.formatMessage(messages.sidebarDashboardTitle),
+              // label: 'Home',
+              path: '/',
               icon: <Home />,
               isVisible: true, // Always visible
             },
+            // {
+            //   label: intl.formatMessage(messages.sidebarCreateNewCourseTitle),
+            //   // label: 'Create New Course',
+            //   path: '/new-course',
+            //   icon: <LibraryAdd />,
+            //   isVisible: menuConfig.allow_to_create_new_course || false,
+            // },
             {
-              // label: intl.formatMessage(messages.sidebarCreateNewCourseTitle),
-              label: 'Create New Course',
-              path: '/new-course',
-              icon: <LibraryAdd />,
-              isVisible: menuConfig.allow_to_create_new_course || false,
-            },
-            {
-              // label: intl.formatMessage(messages.sidebarMyCoursesTitle),
-              label: 'My Courses',
+              label: intl.formatMessage(messages.sidebarMyCoursesTitle),
+              // label: 'My Courses',
               path: '/my-courses',
               icon: <LmsBook />,
               isVisible: true, // Always visible
             },
+            // {
+            //   label: intl.formatMessage(messages.sidebarContentLibrariesTitle),
+            //   // label: 'Content Libraries',
+            //   path: '/libraries',
+            //   icon: <LibraryBooks />,
+            //   isVisible: true, // Always visible
+            // },
+            // {
+            //   label: intl.formatMessage(messages.sidebarCalendarTitle),
+            //   // label: 'Calendar',
+            //   path: '/calendar',
+            //   icon: <Calendar />,
+            //   isVisible: true, // Always visible
+            // },
+            // {
+            //   label: intl.formatMessage(messages.sidebarClassPlannerTitle),
+            //   // label: 'Class Planner',
+            //   path: '/class-planner',
+            //   icon: <Analytics />,
+            //   isVisible: menuConfig.show_class_planner || false,
+            // },
+            // {
+            //   label: intl.formatMessage(messages.sidebarInsightsReportsTitle),
+            //   // label: 'Insights & Reports',
+            //   path: '/reports',
+            //   icon: <Lightbulb />,
+            //   isVisible: menuConfig.show_insights_and_reports || false,
+            // },
+            // {
+            //   label: intl.formatMessage(messages.sidebarTitanAITitle),
+            //   // label: 'Titan AI',
+            //   path: '/ai-assistant',
+            //   icon: <Assistant />,
+            //   isVisible: menuConfig.assistant_is_enabled || false,
+            // },
+            // {
+            //   label: intl.formatMessage(messages.sidebarSharedResourcesTitle),
+            //   // label: 'Shared Resources',
+            //   path: '/shared-resources',
+            //   icon: <FolderShared />,
+            //   isVisible: menuConfig.resources_is_enabled || false,
+            // },
+            // {
+            //   label: intl.formatMessage(messages.sidebarTaxonomiesTitle),
+            //   // label: 'Taxonomies',
+            //   path: '/taxonomies',
+            //   icon: <Assignment />,
+            //   isVisible: true, // Always visible
+            // },
             {
-              // label: intl.formatMessage(messages.sidebarContentLibrariesTitle),
-              label: 'Content Libraries',
-              path: '/libraries',
-              icon: <LibraryBooks />,
-              isVisible: true, // Always visible
-            },
-            {
-              // label: intl.formatMessage(messages.sidebarCalendarTitle),
-              label: 'Calendar',
-              path: '/calendar',
-              icon: <Calendar />,
-              isVisible: true, // Always visible
-            },
-            {
-              // label: intl.formatMessage(messages.sidebarClassPlannerTitle),
-              label: 'Class Planner',
-              path: '/class-planner',
-              icon: <Analytics />,
-              isVisible: menuConfig.show_class_planner || false,
-            },
-            {
-              // label: intl.formatMessage(messages.sidebarInsightsReportsTitle),
-              label: 'Insights & Reports',
-              path: '/reports',
-              icon: <Lightbulb />,
-              isVisible: menuConfig.show_insights_and_reports || false,
-            },
-            {
-              // label: intl.formatMessage(messages.sidebarTitanAITitle),
-              label: 'Titan AI',
-              path: '/ai-assistant',
-              icon: <Assistant />,
-              isVisible: menuConfig.assistant_is_enabled || false,
-            },
-            {
-              // label: intl.formatMessage(messages.sidebarSharedResourcesTitle),
-              label: 'Shared Resources',
-              path: '/shared-resources',
-              icon: <FolderShared />,
-              isVisible: menuConfig.resources_is_enabled || false,
-            },
-            {
-              // label: intl.formatMessage(messages.sidebarTaxonomiesTitle),
-              label: 'Taxonomies',
-              path: '/taxonomies',
-              icon: <Assignment />,
-              isVisible: true, // Always visible
-            },
-            {
-              label: 'Switch to Old View',
+              label: intl.formatMessage(messages.sidebarSwitchToOldViewTitle),
+              // label: 'Switch to Old View',
               path: 'switch-to-old-view',
               icon: <FolderShared />,
               isVisible: true,
@@ -199,77 +204,78 @@ const Layout = ({ children }) => {
         // Fallback to always-visible items when API fails
         const fallbackItems = [
           {
-            // label: intl.formatMessage(messages.sidebarDashboardTitle),
-            label: 'Home',
-            path: '/home',
+            label: intl.formatMessage(messages.sidebarDashboardTitle),
+            // label: 'Home',
+            path: '/',
             icon: <Home />,
             isVisible: true,
           },
+          // {
+          //   label: intl.formatMessage(messages.sidebarCreateNewCourseTitle),
+          //   // label: 'Create New Course',
+          //   path: '/new-course',
+          //   icon: <LibraryAdd />,
+          //   isVisible: false, // Hide when API fails
+          // },
           {
-            // label: intl.formatMessage(messages.sidebarCreateNewCourseTitle),
-            label: 'Create New Course',
-            path: '/new-course',
-            icon: <LibraryAdd />,
-            isVisible: false, // Hide when API fails
-          },
-          {
-            // label: intl.formatMessage(messages.sidebarMyCoursesTitle),
-            label: 'My Courses',
+            label: intl.formatMessage(messages.sidebarMyCoursesTitle),
+            // label: 'My Courses',
             path: '/my-courses',
             icon: <LmsBook />,
             isVisible: true,
           },
+          // {
+          //   label: intl.formatMessage(messages.sidebarContentLibrariesTitle),
+          //   // label: 'Content Libraries',
+          //   path: '/libraries',
+          //   icon: <LibraryBooks />,
+          //   isVisible: true,
+          // },
+          // {
+          //   label: intl.formatMessage(messages.sidebarCalendarTitle),
+          //   // label: 'Calendar',
+          //   path: '/calendar',
+          //   icon: <Calendar />,
+          //   isVisible: true,
+          // },
+          // {
+          //   label: intl.formatMessage(messages.sidebarClassPlannerTitle),
+          //   // label: 'Class Planner',
+          //   path: '/class-planner',
+          //   icon: <Analytics />,
+          //   isVisible: false, // Hide when API fails
+          // },
+          // {
+          //   label: intl.formatMessage(messages.sidebarInsightsReportsTitle),
+          //   // label: 'Insights & Reports',
+          //   path: '/reports',
+          //   icon: <Lightbulb />,
+          //   isVisible: false, // Hide when API fails
+          // },
+          // {
+          //   label: intl.formatMessage(messages.sidebarTitanAITitle),
+          //   // label: 'Titan AI',
+          //   path: '/ai-assistant',
+          //   icon: <Assistant />,
+          //   isVisible: false, // Hide when API fails
+          // },
+          // {
+          //   label: intl.formatMessage(messages.sidebarSharedResourcesTitle),
+          //   // label: 'Shared Resources',
+          //   path: '/shared-resources',
+          //   icon: <FolderShared />,
+          //   isVisible: false, // Hide when API fails
+          // },
+          // {
+          //   label: intl.formatMessage(messages.sidebarTaxonomiesTitle),
+          //   // label: 'Taxonomies',
+          //   path: '/taxonomies',
+          //   icon: <Assignment />,
+          //   isVisible: true,
+          // },
           {
-            // label: intl.formatMessage(messages.sidebarContentLibrariesTitle),
-            label: 'Content Libraries',
-            path: '/libraries',
-            icon: <LibraryBooks />,
-            isVisible: true,
-          },
-          {
-            // label: intl.formatMessage(messages.sidebarCalendarTitle),
-            label: 'Calendar',
-            path: '/calendar',
-            icon: <Calendar />,
-            isVisible: true,
-          },
-          {
-            // label: intl.formatMessage(messages.sidebarClassPlannerTitle),
-            label: 'Class Planner',
-            path: '/class-planner',
-            icon: <Analytics />,
-            isVisible: false, // Hide when API fails
-          },
-          {
-            // label: intl.formatMessage(messages.sidebarInsightsReportsTitle),
-            label: 'Insights & Reports',
-            path: '/reports',
-            icon: <Lightbulb />,
-            isVisible: false, // Hide when API fails
-          },
-          {
-            // label: intl.formatMessage(messages.sidebarTitanAITitle),
-            label: 'Titan AI',
-            path: '/ai-assistant',
-            icon: <Assistant />,
-            isVisible: false, // Hide when API fails
-          },
-          {
-            // label: intl.formatMessage(messages.sidebarSharedResourcesTitle),
-            label: 'Shared Resources',
-            path: '/shared-resources',
-            icon: <FolderShared />,
-            isVisible: false, // Hide when API fails
-          },
-          {
-            // label: intl.formatMessage(messages.sidebarTaxonomiesTitle),
-            label: 'Taxonomies',
-            path: '/taxonomies',
-            icon: <Assignment />,
-            isVisible: true,
-          },
-          {
-            label: 'Switch to Old View',
+            label: intl.formatMessage(messages.sidebarSwitchToOldViewTitle),
+            // label: 'Switch to Old View',
             path: 'switch-to-old-view',
             icon: <FolderShared />,
             isVisible: true,
@@ -320,6 +326,10 @@ const Layout = ({ children }) => {
       } catch (error) {
         console.error('Error switching to old UI:', error);
       }
+    } else if (path === '/') {
+      window.location.href = `https://${getConfig().BASE_URL}/learner-dashboard${path}`;
+    } else if (path === '/my-courses') {
+      window.location.href = `https://${getConfig().BASE_URL}/learner-dashboard${path}`;
     } else {
       navigate(path);
     }

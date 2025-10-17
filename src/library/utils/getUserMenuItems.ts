@@ -28,10 +28,10 @@ const getUserMenuItems = ({
       href: `${getConfig().ACCOUNT_SETTINGS_URL}`,
       title: 'Account',
     },
-    {
-      href: 'http://localhost:1996/orders',
-      title: 'Order History',
-    },
+    // {
+    //   href: 'http://localhost:1996/orders',
+    //   title: 'Order History',
+    // },
     {
       href: `${logoutUrl}`,
       title: 'Sign Out',
