@@ -82,14 +82,8 @@ const CustomProfilePage = ({
     return isAgeOrNotCompliant && getConfig().COLLECT_YEAR_OF_BIRTH !== 'true';
   };
 
-  console.log('courseCertificates', courseCertificates);
-  console.log('visibilityCourseCertificates', visibilityCourseCertificates);
 
-  console.log('Mapping objects received:', {
-    countryMessages,
-    languageMessages,
-    educationMessages,
-  });
+  
 
   // Inserted into the DOM in two places (for responsive layout)
   const renderViewMyRecordsButton = () => {
@@ -153,7 +147,6 @@ const CustomProfilePage = ({
   const isCertificatesBlockVisible = isBlockVisible(courseCertificates.length);
   const isNameBlockVisible = isBlockVisible(name);
   const isLocationBlockVisible = isBlockVisible(country);
-  console.log(country);
 
   return (
     <div className="container-fluid profile-page-container">

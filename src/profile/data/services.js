@@ -23,7 +23,6 @@ function processAndThrowError(error, errorDataProcessor) {
 export async function getAccount(username) {
   const { data } = await getHttpClient().get(`${getConfig().LMS_BASE_URL}/api/user/v1/accounts/${username}`);
 
-  console.log(data);
   // Process response data
   return processAccountData(data);
 }

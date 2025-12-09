@@ -53,8 +53,6 @@ const fetchNavigationItems = async () => {
 
 const Layout = ({ children }) => {
   const { authenticatedUser, config } = useContext(AppContext);
-  console.log('authenticatedUser', authenticatedUser);
-  console.log('config', config);
   const { LMS_BASE_URL, LOGOUT_URL } = config;
 
   const intl = useIntl();
@@ -68,7 +66,6 @@ const Layout = ({ children }) => {
   const location = useLocation();
 
   const presentPath = location.pathname;
-  console.log('presentPath', presentPath);
 
   const handleLanguageChange = () => {
     const { pathname } = location;
@@ -103,7 +100,6 @@ const Layout = ({ children }) => {
     fetchUserMenuItemsFromAPI();
   }, []);
 
-  console.log('userMenuItemsFromAPI', userMenuItemsFromAPI);
 
   const updatedAuthenticatedUser = {
     ...authenticatedUser,
@@ -113,7 +109,6 @@ const Layout = ({ children }) => {
       : authenticatedUser?.avatar,
   };
 
-  console.log('updatedAuthenticatedUser', updatedAuthenticatedUser);
 
   const userMenuItems = getUserMenuItems({
     lmsBaseUrl: LMS_BASE_URL,
@@ -348,10 +343,8 @@ const Layout = ({ children }) => {
   const handleNavigate = async (path) => {
     if (path === 'switch-to-old-view') {
       try {
-        console.log('Switching to old UI...');
         const success = await setUIPreference(false);
         if (success) {
-          console.log('Successfully switched to old UI, reloading page...');
           window.location.reload();
         } else {
           console.error('Failed to switch to old UI');
