@@ -62,7 +62,7 @@
     "redux-thunk": "2.4.2",
     "regenerator-runtime": "0.14.1",
     "reselect": "4.1.8",
-    "titaned-frontend-library": "^1.0.12",
+    "titaned-frontend-library": "^1.0.15",
     "universal-cookie": "4.0.4"
   },
   "devDependencies": {
