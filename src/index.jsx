@@ -18,6 +18,8 @@ import {
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 
+import { dynamicTheme } from 'titaned-frontend-library';
+
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import Header from '@edx/frontend-component-header';
 import FooterSlot from '@openedx/frontend-slot-footer';
@@ -33,7 +35,6 @@ import './index.scss';
 import Head from './head/Head';
 
 import AppRoutes from './routes/AppRoutes';
-import { applyTheme } from './styles/themeLoader';
 
 // import 'titaned-lib/dist/index.css';
 
@@ -51,7 +52,7 @@ const loadStylesForNewUI = (isOldUI) => {
 };
 
 // Main App component with state management
-const App = () => {
+function App() {
   const [oldUI, setOldUI] = useState(null);
   const [loading, setLoading] = useState(true);
   const [menuConfig, setMenuConfig] = useState(null);
@@ -100,7 +101,14 @@ const App = () => {
   // Apply theme from JSON
   useEffect(() => {
     if (oldUI === 'false') {
-      applyTheme(); // Load default theme from /theme.json
+      (async () => {
+        try {
+          const response = await getAuthenticatedHttpClient().get(`${getConfig().LMS_BASE_URL}/titaned/api/v1/mfe_context/`);
+          dynamicTheme(response);
+        } catch (error) {
+          console.error('Error fetching theme config:', error);
+        }
+      })();
     }
   }, [oldUI]);
 
@@ -138,7 +146,7 @@ const App = () => {
       )}
     </AppProvider>
   );
-};
+}
 
 subscribe(APP_READY, () => {
   ReactDOM.render(
