@@ -25,7 +25,7 @@ import LearningGoal from './forms/LearningGoal';
 import messages from './ProfilePage.messages';
 import customProfileMessages from './CustomProfilePage.messages';
 
-const CustomProfilePage = ({
+function CustomProfilePage({
   // Profile data
   profileImage,
   name,
@@ -72,7 +72,7 @@ const CustomProfilePage = ({
 
   // i18n
   intl,
-}) => {
+}) {
   const [isEditingPersonalInfo, setIsEditingPersonalInfo] = useState(false);
   const [isEditingAboutMe, setIsEditingAboutMe] = useState(false);
   const [isEditingCertificates, setIsEditingCertificates] = useState(false);
@@ -81,9 +81,6 @@ const CustomProfilePage = ({
     const isAgeOrNotCompliant = !yearOfBirth || ((currentYear - yearOfBirth) < 13);
     return isAgeOrNotCompliant && getConfig().COLLECT_YEAR_OF_BIRTH !== 'true';
   };
-
-
-  
 
   // Inserted into the DOM in two places (for responsive layout)
   const renderViewMyRecordsButton = () => {
@@ -104,7 +101,6 @@ const CustomProfilePage = ({
       <h1 className="h2 mb-0 font-weight-bold text-truncate">{username}</h1>
       <DateJoined date={dateJoined} />
       {isYOBDisabled() && <UsernameDescription />}
-      {/* <hr className="d-none d-md-block" /> */}
     </span>
   );
 
@@ -214,7 +210,7 @@ const CustomProfilePage = ({
                           {socialLinks.some(link => link.socialLink) ? (
                             <span className="social-links-count">{intl.formatMessage(customProfileMessages['profile.personalInformation.linksCount'], { count: socialLinks.filter(link => link.socialLink).length })}</span>
                           ) : (
-                          <span className="add-link" onClick={() => setIsEditingPersonalInfo(!isEditingPersonalInfo)}>{intl.formatMessage(customProfileMessages['profile.personalInformation.add'])}</span>
+                            <span className="add-link" onClick={() => setIsEditingPersonalInfo(!isEditingPersonalInfo)}>{intl.formatMessage(customProfileMessages['profile.personalInformation.add'])}</span>
                           )}
                         </div>
                       </div>
@@ -360,8 +356,8 @@ const CustomProfilePage = ({
                         <div className="certificates-list">
                           {courseCertificates.map((certificate, index) => (
                             <div key={index} className="certificate-item">
-                            <h6 className="certificate-title">{certificate.courseDisplayName}</h6>
-                          </div>
+                              <h6 className="certificate-title">{certificate.courseDisplayName}</h6>
+                            </div>
                           ))}
                         </div>
                       ) : (
@@ -406,7 +402,7 @@ const CustomProfilePage = ({
       </div>
     </div>
   );
-};
+}
 
 CustomProfilePage.propTypes = {
   // Profile data
