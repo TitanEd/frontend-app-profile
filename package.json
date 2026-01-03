@@ -13,7 +13,7 @@
     "i18n_extract": "fedx-scripts formatjs extract",
     "lint": "fedx-scripts eslint --ext .js --ext .jsx .",
     "snapshot": "fedx-scripts jest --updateSnapshot",
-    "start": "fedx-scripts webpack-dev-server --progress",
+    "start": "set PUBLIC_PATH=/profile/&&fedx-scripts webpack-dev-server --progress --host apps.local.openedx.io",
     "test": "TZ=UTC fedx-scripts jest --coverage --passWithNoTests",
     "stubs": "pact-stub-service ./src/pacts/frontend-app-profile-edx-platform.json --port 18000"
   },
@@ -37,6 +37,7 @@
     "@fortawesome/free-regular-svg-icons": "6.6.0",
     "@fortawesome/free-solid-svg-icons": "6.6.0",
     "@fortawesome/react-fontawesome": "0.2.2",
+    "@openedx/frontend-plugin-framework": "^1.2.2",
     "@openedx/frontend-slot-footer": "^1.0.2",
     "@openedx/paragon": "^22.2.2",
     "@pact-foundation/pact": "^11.0.2",
@@ -61,6 +62,7 @@
     "redux-thunk": "2.4.2",
     "regenerator-runtime": "0.14.1",
     "reselect": "4.1.8",
+    "titaned-frontend-library": "^1.0.15",
     "universal-cookie": "4.0.4"
   },
   "devDependencies": {

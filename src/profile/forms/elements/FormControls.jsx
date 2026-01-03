@@ -6,6 +6,7 @@ import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import messages from './FormControls.messages';
 
 import { VisibilitySelect } from './Visibility';
+import { PluginSlot } from '@openedx/frontend-plugin-framework';
 
 const FormControls = ({
   cancelHandler, changeHandler, visibility, visibilityId, saveState, intl,
@@ -28,33 +29,47 @@ const FormControls = ({
           onChange={changeHandler}
         />
       </div>
-      <div className="form-group flex-shrink-0 flex-grow-1">
-        <StatefulButton
-          type="submit"
-          state={buttonState}
-          labels={{
-            default: intl.formatMessage(messages['profile.formcontrols.button.save']),
-            pending: intl.formatMessage(messages['profile.formcontrols.button.saving']),
-            complete: intl.formatMessage(messages['profile.formcontrols.button.saved']),
-          }}
-          onClick={(e) => {
-            // Swallow clicks if the state is pending.
-            // We do this instead of disabling the button to prevent
-            // it from losing focus (disabled elements cannot have focus).
-            // Disabling it would causes upstream issues in focus management.
-            // Swallowing the onSubmit event on the form would be better, but
-            // we would have to add that logic for every field given our
-            // current structure of the application.
-            if (buttonState === 'pending') {
-              e.preventDefault();
-            }
-          }}
-          disabledStates={[]}
-        />
-        <Button variant="link" onClick={cancelHandler}>
-          {intl.formatMessage(messages['profile.formcontrols.button.cancel'])}
-        </Button>
-      </div>
+      <PluginSlot
+        id="stateful_button_plugin_slot"
+        pluginProps={{
+          buttonState,
+          cancelHandler,
+          changeHandler,
+          visibility,
+          visibilityId,
+          saveState,
+          intl,
+          messages,
+        }}
+      >
+        <div className="form-group flex-shrink-0 flex-grow-1 custom-statefull-button">
+          <StatefulButton
+            type="submit"
+            state={buttonState}
+            labels={{
+              default: intl.formatMessage(messages['profile.formcontrols.button.save']),
+              pending: intl.formatMessage(messages['profile.formcontrols.button.saving']),
+              complete: intl.formatMessage(messages['profile.formcontrols.button.saved']),
+            }}
+            onClick={(e) => {
+              // Swallow clicks if the state is pending.
+              // We do this instead of disabling the button to prevent
+              // it from losing focus (disabled elements cannot have focus).
+              // Disabling it would causes upstream issues in focus management.
+              // Swallowing the onSubmit event on the form would be better, but
+              // we would have to add that logic for every field given our
+              // current structure of the application.
+              if (buttonState === 'pending') {
+                e.preventDefault();
+              }
+            }}
+            disabledStates={[]}
+          />
+          <Button variant="link" onClick={cancelHandler}>
+            {intl.formatMessage(messages['profile.formcontrols.button.cancel'])}
+          </Button>
+        </div>
+      </PluginSlot>
     </div>
   );
 };

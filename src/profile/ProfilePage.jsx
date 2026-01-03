@@ -8,6 +8,8 @@ import { AppContext } from '@edx/frontend-platform/react';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { Alert, Hyperlink } from '@openedx/paragon';
 
+import { PluginSlot } from '@openedx/frontend-plugin-framework';
+
 // Actions
 import {
   fetchProfile,
@@ -189,6 +191,9 @@ class ProfilePage extends React.Component {
       return <PageLoading srMessage={this.props.intl.formatMessage(messages['profile.loading'])} />;
     }
 
+    console.log('courseCertificates', courseCertificates);
+    console.log('visibilityCourseCertificates', visibilityCourseCertificates);
+
     const commonFormProps = {
       openHandler: this.handleOpen,
       closeHandler: this.handleClose,
@@ -207,110 +212,160 @@ class ProfilePage extends React.Component {
     const isNameBlockVisible = isBlockVisible(name);
     const isLocationBlockVisible = isBlockVisible(country);
 
+    const pluginProps = {
+      // Profile data
+      profileImage,
+      name,
+      visibilityName,
+      country,
+      visibilityCountry,
+      levelOfEducation,
+      visibilityLevelOfEducation,
+      socialLinks,
+      draftSocialLinksByPlatform,
+      visibilitySocialLinks,
+      learningGoal,
+      visibilityLearningGoal,
+      languageProficiencies,
+      visibilityLanguageProficiencies,
+      courseCertificates,
+      visibilityCourseCertificates,
+      bio,
+      visibilityBio,
+      requiresParentalConsent,
+      isLoadingProfile,
+      yearOfBirth: this.props.yearOfBirth,
+      dateJoined: this.props.dateJoined,
+      photoUploadError: this.props.photoUploadError,
+      savePhotoState: this.props.savePhotoState,
+      onSavePhoto: this.handleSaveProfilePhoto,
+      onDeletePhoto: this.handleDeleteProfilePhoto,
+      enableSkillsBuilderProfile: getConfig().ENABLE_SKILLS_BUILDER_PROFILE,
+
+      // URLs
+      viewMyRecordsUrl: this.state.viewMyRecordsUrl,
+      accountSettingsUrl: this.state.accountSettingsUrl,
+
+      // User info
+      username: this.props.params.username,
+      isAuthenticatedUserProfile: this.isAuthenticatedUserProfile(),
+
+      // Form handlers
+      commonFormProps,
+
+      // i18n
+      intl: this.props.intl,
+    };
+
     return (
-      <div className="container-fluid">
-        <div className="row align-items-center pt-4 mb-4 pt-md-0 mb-md-0">
-          <div className="col-auto col-md-4 col-lg-3">
-            <div className="d-flex align-items-center d-md-block">
-              <ProfileAvatar
-                className="mb-md-3"
-                src={profileImage.src}
-                isDefault={profileImage.isDefault}
-                onSave={this.handleSaveProfilePhoto}
-                onDelete={this.handleDeleteProfilePhoto}
-                savePhotoState={this.props.savePhotoState}
-                isEditable={this.isAuthenticatedUserProfile() && !requiresParentalConsent}
-              />
+      <PluginSlot
+        id="profile_page_plugin_slot"
+        pluginProps={pluginProps}
+      >
+        <div className="container-fluid">
+          <div className="row align-items-center pt-4 mb-4 pt-md-0 mb-md-0">
+            <div className="col-auto col-md-4 col-lg-3">
+              <div className="d-flex align-items-center d-md-block">
+                <ProfileAvatar
+                  className="mb-md-3"
+                  src={profileImage.src}
+                  isDefault={profileImage.isDefault}
+                  onSave={this.handleSaveProfilePhoto}
+                  onDelete={this.handleDeleteProfilePhoto}
+                  savePhotoState={this.props.savePhotoState}
+                  isEditable={this.isAuthenticatedUserProfile() && !requiresParentalConsent}
+                />
+              </div>
+            </div>
+            <div className="col">
+              <div className="d-md-none">
+                {this.renderHeadingLockup()}
+              </div>
+              <div className="d-none d-md-block float-right">
+                {this.renderViewMyRecordsButton()}
+              </div>
             </div>
           </div>
-          <div className="col">
-            <div className="d-md-none">
-              {this.renderHeadingLockup()}
+          {this.renderPhotoUploadErrorMessage()}
+          <div className="row">
+            <div className="col-md-4 col-lg-4">
+              <div className="d-none d-md-block mb-4">
+                {this.renderHeadingLockup()}
+              </div>
+              <div className="d-md-none mb-4">
+                {this.renderViewMyRecordsButton()}
+              </div>
+              {isNameBlockVisible && (
+                <Name
+                  name={name}
+                  visibilityName={visibilityName}
+                  formId="name"
+                  {...commonFormProps}
+                />
+              )}
+              {isLocationBlockVisible && (
+                <Country
+                  country={country}
+                  visibilityCountry={visibilityCountry}
+                  formId="country"
+                  {...commonFormProps}
+                />
+              )}
+              {isLanguageBlockVisible && (
+                <PreferredLanguage
+                  languageProficiencies={languageProficiencies}
+                  visibilityLanguageProficiencies={visibilityLanguageProficiencies}
+                  formId="languageProficiencies"
+                  {...commonFormProps}
+                />
+              )}
+              {isEducationBlockVisible && (
+                <Education
+                  levelOfEducation={levelOfEducation}
+                  visibilityLevelOfEducation={visibilityLevelOfEducation}
+                  formId="levelOfEducation"
+                  {...commonFormProps}
+                />
+              )}
+              {isSocialLinksBLockVisible && (
+                <SocialLinks
+                  socialLinks={socialLinks}
+                  draftSocialLinksByPlatform={draftSocialLinksByPlatform}
+                  visibilitySocialLinks={visibilitySocialLinks}
+                  formId="socialLinks"
+                  {...commonFormProps}
+                />
+              )}
             </div>
-            <div className="d-none d-md-block float-right">
-              {this.renderViewMyRecordsButton()}
+            <div className="pt-md-3 col-md-8 col-lg-7 offset-lg-1">
+              {!this.isYOBDisabled() && this.renderAgeMessage()}
+              {isBioBlockVisible && (
+                <Bio
+                  bio={bio}
+                  visibilityBio={visibilityBio}
+                  formId="bio"
+                  {...commonFormProps}
+                />
+              )}
+              {getConfig().ENABLE_SKILLS_BUILDER_PROFILE && (
+                <LearningGoal
+                  learningGoal={learningGoal}
+                  visibilityLearningGoal={visibilityLearningGoal}
+                  formId="learningGoal"
+                  {...commonFormProps}
+                />
+              )}
+              {isCertificatesBlockVisible && (
+                <Certificates
+                  visibilityCourseCertificates={visibilityCourseCertificates}
+                  formId="certificates"
+                  {...commonFormProps}
+                />
+              )}
             </div>
           </div>
         </div>
-        {this.renderPhotoUploadErrorMessage()}
-        <div className="row">
-          <div className="col-md-4 col-lg-4">
-            <div className="d-none d-md-block mb-4">
-              {this.renderHeadingLockup()}
-            </div>
-            <div className="d-md-none mb-4">
-              {this.renderViewMyRecordsButton()}
-            </div>
-            {isNameBlockVisible && (
-              <Name
-                name={name}
-                visibilityName={visibilityName}
-                formId="name"
-                {...commonFormProps}
-              />
-            )}
-            {isLocationBlockVisible && (
-              <Country
-                country={country}
-                visibilityCountry={visibilityCountry}
-                formId="country"
-                {...commonFormProps}
-              />
-            )}
-            {isLanguageBlockVisible && (
-              <PreferredLanguage
-                languageProficiencies={languageProficiencies}
-                visibilityLanguageProficiencies={visibilityLanguageProficiencies}
-                formId="languageProficiencies"
-                {...commonFormProps}
-              />
-            )}
-            {isEducationBlockVisible && (
-              <Education
-                levelOfEducation={levelOfEducation}
-                visibilityLevelOfEducation={visibilityLevelOfEducation}
-                formId="levelOfEducation"
-                {...commonFormProps}
-              />
-            )}
-            {isSocialLinksBLockVisible && (
-              <SocialLinks
-                socialLinks={socialLinks}
-                draftSocialLinksByPlatform={draftSocialLinksByPlatform}
-                visibilitySocialLinks={visibilitySocialLinks}
-                formId="socialLinks"
-                {...commonFormProps}
-              />
-            )}
-          </div>
-          <div className="pt-md-3 col-md-8 col-lg-7 offset-lg-1">
-            {!this.isYOBDisabled() && this.renderAgeMessage()}
-            {isBioBlockVisible && (
-              <Bio
-                bio={bio}
-                visibilityBio={visibilityBio}
-                formId="bio"
-                {...commonFormProps}
-              />
-            )}
-            {getConfig().ENABLE_SKILLS_BUILDER_PROFILE && (
-              <LearningGoal
-                learningGoal={learningGoal}
-                visibilityLearningGoal={visibilityLearningGoal}
-                formId="learningGoal"
-                {...commonFormProps}
-              />
-            )}
-            {isCertificatesBlockVisible && (
-              <Certificates
-                visibilityCourseCertificates={visibilityCourseCertificates}
-                formId="certificates"
-                {...commonFormProps}
-              />
-            )}
-          </div>
-        </div>
-      </div>
+      </PluginSlot>
     );
   }
 
@@ -380,7 +435,6 @@ ProfilePage.propTypes = {
     src: PropTypes.string,
     isDefault: PropTypes.bool,
   }),
-  saveState: PropTypes.oneOf([null, 'pending', 'complete', 'error']),
   savePhotoState: PropTypes.oneOf([null, 'pending', 'complete', 'error']),
   isLoadingProfile: PropTypes.bool.isRequired,
 
@@ -406,7 +460,6 @@ ProfilePage.propTypes = {
 };
 
 ProfilePage.defaultProps = {
-  saveState: null,
   savePhotoState: null,
   photoUploadError: {},
   profileImage: {},

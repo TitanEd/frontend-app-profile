@@ -1,0 +1,384 @@
+// Mixins
+@mixin card-style1 {
+    border-radius: 1rem;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-surface);
+}
+
+@mixin card-style2 {
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-surface);
+}
+
+@mixin card-style3 {
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-surface);
+}
+
+@mixin sub-header-title-style1 {
+    font-size: 20px !important;
+    font-weight: 600 !important;
+    line-height: 1.2 !important;
+    letter-spacing: normal !important;
+}
+
+@mixin section-title-style1 {
+    font-size: 18px !important;
+    font-weight: 500 !important;
+    line-height: 1.2 !important;
+    letter-spacing: normal !important;
+}
+
+@mixin section-title-style2 {
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    line-height: 1.2 !important;
+    letter-spacing: normal !important;
+}
+
+@mixin section-title-style3 {
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    line-height: 1.2 !important;
+    letter-spacing: normal !important;
+}
+
+.customHr {
+    border: 'none';
+    border-top: '1px solid #e5e6e6', ;
+    margin: '0 0 0 0';
+    margin-left: -1rem;
+    margin-right: -1rem;
+}
+
+.profile-page {
+    padding: 1rem;
+
+    .profile-avatar {
+        @media (min-width: 768px) {
+            width: 9rem !important;
+            height: 9rem !important;
+        }
+    }
+
+    .profile-avatar-wrap {
+        @media (min-width: 768px) {
+          max-width: 12rem;
+          margin-right: 0;
+          margin-top: 1rem !important;
+          margin-bottom: 2rem;
+        }
+    }
+
+    
+}
+
+.profile-page-container {
+    padding-left: 4rem;
+    padding-right: 4rem;
+    // background-color: blue;
+
+    @media (max-width: 768px) {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+.profile-page-bg-banner {
+    border-radius: 8px !important;
+}
+
+.card-section {
+    @include card-style2;
+    padding: 1rem;
+
+    .card-section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+
+        .card-section-title {
+            @include section-title-style1;
+            margin: 0;
+            flex: 1;
+        }
+
+        .edit-button {
+            font-size: 14px;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            margin-left: auto;
+        }
+
+
+    }
+
+    .card-section-title {
+        @include section-title-style1;
+    }
+}
+
+.edit-section-header {
+    // display: none !important;
+    @include section-title-style2;
+}
+
+.profile-page-bg-banner {
+    display: none !important;
+}
+
+// Personal Information Grid Layout
+.personal-info-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2rem;
+    padding: 1rem 0;
+
+    .info-column {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+
+        .info-label {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.2;
+            word-break: break-word;
+        }
+
+        .add-link {
+            color: var(--primary);
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: underline;
+
+            &:hover {
+                color: var(--primary-hover);
+            }
+        }
+
+        .social-links-count {
+            color: #28a745;
+            font-weight: 600;
+        }
+    }
+}
+
+// About Me Content Styles
+.about-me-content {
+    padding: 1rem 0;
+
+    .bio-text {
+        .bio-paragraph {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #212529;
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+    }
+
+    .no-bio-placeholder {
+        text-align: center;
+        padding: 2rem 1rem;
+
+        .placeholder-text {
+            font-size: 16px;
+            color: #6c757d;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .add-link {
+            color: #007bff;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: underline;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+
+            &:hover {
+                color: #0056b3;
+            }
+        }
+    }
+}
+
+// Certificates Content Styles
+.certificates-content {
+    padding: 1rem 0;
+
+    .certificates-list {
+        .certificate-item {
+            padding: 1rem;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            background-color: #f8f9fa;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            .certificate-title {
+                font-size: 16px;
+                font-weight: 600;
+                color: #212529;
+                margin: 0;
+                line-height: 1.4;
+            }
+        }
+    }
+
+    .no-certificates-placeholder {
+        text-align: center;
+        padding: 2rem 1rem;
+
+        .placeholder-text {
+            font-size: 16px;
+            color: #6c757d;
+            margin: 0;
+            font-style: italic;
+        }
+    }
+}
+
+.card-section-content {
+    .btn-sm {
+        padding: 0.5rem 1rem !important;
+    }
+
+    .custom-statefull-button {
+        .btn-sm {
+            padding: 0.5rem 1rem !important;
+        }
+    }
+
+    .list-unstyled {
+        a {
+            color: var(--primary);
+
+            &:hover {
+                color: var(--primary-hover);
+            }
+        }
+    }
+}
+
+.custom-certificate-title-edit-mode {
+    color: var(--text-primary) !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    line-height: 1.2 !important;
+    font-family: sans-serif !important;
+}
+
+.custom-certificate-organization-edit-mode {
+    color: var(--text-primary) !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    line-height: 1.2 !important;
+    font-family: sans-serif !important;
+}
+
+// Responsive design for mobile
+@media (max-width: 768px) {
+    .personal-info-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+        padding: 0.5rem 0;
+
+        .info-column {
+            .info-label {
+                font-size: 11px;
+            }
+
+            .info-value {
+                font-size: 14px;
+            }
+        }
+    }
+
+    .card-section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+
+        .edit-button {
+            align-self: flex-end;
+        }
+    }
+
+    .about-me-content {
+        padding: 0.5rem 0;
+
+        .bio-text {
+            .bio-paragraph {
+                font-size: 18px;
+            }
+        }
+
+        .no-bio-placeholder {
+            padding: 1.5rem 0.5rem;
+
+            .placeholder-text {
+                font-size: 14px;
+            }
+
+            .add-link {
+                font-size: 12px;
+            }
+        }
+    }
+
+    .certificates-content {
+        padding: 0.5rem 0;
+
+        .certificates-list {
+            .certificate-item {
+                padding: 0.75rem;
+
+                .certificate-title {
+                    font-size: 14px;
+                }
+            }
+        }
+
+        .no-certificates-placeholder {
+            padding: 1.5rem 0.5rem;
+
+            .placeholder-text {
+                font-size: 14px;
+            }
+        }
+    }
+
+    .custom-profile-page-fluid-container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .profile-avatar-menu-container {
+        .custom-profile-avatar-dropdown-toggle {
+            padding: 0.5rem 1rem !important;
+            margin-left: 12rem !important;
+            font-size: 14px !important;
+        }
+    }
+}
