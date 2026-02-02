@@ -3,7 +3,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation, useNavigate } from 'react-router';
-import { MainHeader, Sidebar, SidebarProvider } from 'titaned-frontend-library';
+import { MainHeader, Sidebar, SidebarProvider, AnnouncementBanner } from 'titaned-frontend-library';
 import { AppContext } from '@edx/frontend-platform/react';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import {
@@ -61,6 +61,36 @@ const Layout = ({ children }) => {
   const [headerButtons, setHeaderButtons] = useState({});
   const [languageSelectorList, setLanguageSelectorList] = useState([]);
   const [userMenuItemsFromAPI, setUserMenuItemsFromAPI] = useState({});
+
+  const [systemAlert, setSystemAlert] = useState("<p>This is system alert</p>");
+  const [userAlert, setUserAlert] = useState("<p>This is user alert</p>");
+
+  useEffect(() => {
+    const fetchAlerts = async () => {
+      try {
+        const systemResponse = await getAuthenticatedHttpClient().get(`${getConfig().LMS_BASE_URL}/titaned/api/v1/system/alerts/`);
+        // const systemResponse = await getAuthenticatedHttpClient().get('LMS_API_DOMAIN/titaned/api/v1/system/alerts/');
+
+
+        const userResponse = await getAuthenticatedHttpClient().get(`${getConfig().LMS_BASE_URL}/titaned/api/v1/user/alerts/`);
+        // for local api fetch 
+        // const userResponse = await getAuthenticatedHttpClient().get('LMS_API_DOMAIN/titaned/api/v1/user/alerts/');
+
+
+        if (systemResponse?.data) {
+          setSystemAlert(systemResponse.data.alert);
+        }
+
+        if (userResponse?.data) {
+          setUserAlert(userResponse.data.alert);
+        }
+      } catch (error) {
+        console.error('Error fetching announcement alerts:', error);
+      }
+    };
+
+    fetchAlerts();
+  }, []);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -345,6 +375,8 @@ const Layout = ({ children }) => {
       try {
         const success = await setUIPreference(false);
         if (success) {
+          localStorage.removeItem('systemAlert');
+          localStorage.removeItem('userAlert');
           window.location.reload();
         } else {
           console.error('Failed to switch to old UI');
@@ -363,6 +395,21 @@ const Layout = ({ children }) => {
 
   return (
     <div className="app-container">
+    {systemAlert && (
+        <AnnouncementBanner
+          announcementType="systemAlert"
+          data={systemAlert}
+          backgroundColor= "#F0F1FA"
+        />
+      )}
+
+      {userAlert && (
+        <AnnouncementBanner
+          announcementType="userAlert"
+          data={userAlert}
+          backgroundColor= "#FEF8F0"
+        />
+      )}
       {/* <p>This is header</p> */}
       <SidebarProvider>
         <div className="header-container">
