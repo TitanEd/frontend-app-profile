@@ -62,8 +62,8 @@ const Layout = ({ children }) => {
   const [languageSelectorList, setLanguageSelectorList] = useState([]);
   const [userMenuItemsFromAPI, setUserMenuItemsFromAPI] = useState({});
 
-  const [systemAlert, setSystemAlert] = useState("<p>This is system alert</p>");
-  const [userAlert, setUserAlert] = useState("<p>This is user alert</p>");
+  const [systemAlert, setSystemAlert] = useState(null);
+  const [userAlert, setUserAlert] = useState(null);
 
   useEffect(() => {
     const fetchAlerts = async () => {
