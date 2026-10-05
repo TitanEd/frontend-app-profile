@@ -80,6 +80,7 @@
   "overrides": {
     "titaned-frontend-library": {
       "@edx/frontend-platform": "$@edx/frontend-platform"
-    }
+    },
+    "typescript": "5.9.3"
   }
 }
