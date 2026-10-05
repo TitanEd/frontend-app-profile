@@ -201,6 +201,19 @@ describe('RootSaga', () => {
       expect(gen.throw(err).value).toEqual(put(profileActions.saveProfilePhotoReset()));
       expect(gen.next().done).toBe(true);
     });
+
+    it('should report the API validation error on failure', () => {
+      const action = profileActions.saveProfilePhoto('user1', {});
+      const gen = handleSaveProfilePhoto(action);
+
+      expect(gen.next().value).toEqual(put(profileActions.saveProfilePhotoBegin()));
+
+      const err = new Error('fail');
+      err.processedData = { userMessage: 'The file must be smaller than 1 MB in size.' };
+
+      expect(gen.throw(err).value).toEqual(put(profileActions.saveProfilePhotoFailure(err.processedData)));
+      expect(gen.next().done).toBe(true);
+    });
   });
 
   describe('handleDeleteProfilePhoto', () => {
