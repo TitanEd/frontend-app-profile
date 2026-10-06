@@ -26,6 +26,7 @@ import {
   saveProfileSuccess,
   SAVE_PROFILE,
   saveProfilePhotoBegin,
+  saveProfilePhotoFailure,
   saveProfilePhotoReset,
   saveProfilePhotoSuccess,
   SAVE_PROFILE_PHOTO,
@@ -166,7 +167,12 @@ export function* handleSaveProfilePhoto(action) {
     yield put(saveProfilePhotoSuccess(photoResult));
     yield put(saveProfilePhotoReset());
   } catch (e) {
-    yield put(saveProfilePhotoReset());
+    // Show the API validation error (e.g. file too large / wrong type) like Sumac did.
+    if (e.processedData) {
+      yield put(saveProfilePhotoFailure(e.processedData));
+    } else {
+      yield put(saveProfilePhotoReset());
+    }
   }
 }
 

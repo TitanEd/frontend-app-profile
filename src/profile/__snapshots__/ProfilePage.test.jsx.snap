@@ -1417,7 +1417,7 @@ exports[`<ProfilePage /> Renders correctly in various states viewing own profile
                       Verified Certificate
                     </p>
                     <p
-                      class="m-0 color-black h4"
+                      class="m-0 color-black custom-certificate-title-edit-mode h4"
                     >
                       edX Demonstration Course
                     </p>
@@ -1427,7 +1427,7 @@ exports[`<ProfilePage /> Renders correctly in various states viewing own profile
                       From
                     </p>
                     <h5
-                      class="mb-0 color-black"
+                      class="mb-0 color-black custom-certificate-organization-edit-mode"
                     >
                       edX
                     </h5>
@@ -2333,7 +2333,7 @@ exports[`<ProfilePage /> Renders correctly in various states without credentials
                       Verified Certificate
                     </p>
                     <p
-                      class="m-0 color-black h4"
+                      class="m-0 color-black custom-certificate-title-edit-mode h4"
                     >
                       edX Demonstration Course
                     </p>
@@ -2343,7 +2343,7 @@ exports[`<ProfilePage /> Renders correctly in various states without credentials
                       From
                     </p>
                     <h5
-                      class="mb-0 color-black"
+                      class="mb-0 color-black custom-certificate-organization-edit-mode"
                     >
                       edX
                     </h5>

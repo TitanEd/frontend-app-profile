@@ -63,6 +63,7 @@
     "redux-thunk": "2.4.2",
     "regenerator-runtime": "0.14.1",
     "reselect": "5.1.1",
+    "titaned-frontend-library": "^1.0.15",
     "universal-cookie": "4.0.4"
   },
   "devDependencies": {
@@ -75,5 +76,11 @@
     "glob": "11.1.0",
     "jest-environment-jsdom": "^30.3.0",
     "redux-mock-store": "1.5.5"
+  },
+  "overrides": {
+    "titaned-frontend-library": {
+      "@edx/frontend-platform": "$@edx/frontend-platform"
+    },
+    "typescript": "5.9.3"
   }
 }

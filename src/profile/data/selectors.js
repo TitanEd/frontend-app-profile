@@ -85,6 +85,25 @@ export const languageMessagesSelector = createSelector(
   locale => getLanguageMessages(locale),
 );
 
+export const educationMessagesSelector = createSelector(
+  localeSelector,
+  () => {
+    // Import the messages dynamically to avoid circular dependencies
+    const messages = require('../forms/Education.messages').default;
+    return {
+      p: messages['profile.education.levels.p'].defaultMessage,
+      m: messages['profile.education.levels.m'].defaultMessage,
+      b: messages['profile.education.levels.b'].defaultMessage,
+      a: messages['profile.education.levels.a'].defaultMessage,
+      hs: messages['profile.education.levels.hs'].defaultMessage,
+      jhs: messages['profile.education.levels.jhs'].defaultMessage,
+      el: messages['profile.education.levels.el'].defaultMessage,
+      none: messages['profile.education.levels.none'].defaultMessage,
+      other: messages['profile.education.levels.o'].defaultMessage,
+    };
+  },
+);
+
 export const sortedLanguagesSelector = createSelector(
   localeSelector,
   locale => getLanguageList(locale),
@@ -97,8 +116,17 @@ export const sortedCountriesSelector = createSelector(
   (locale, countriesCodesList, profileAccount) => {
     const countryList = getCountryList(locale);
     const userCountry = profileAccount.country;
+    const allowedCodes = Array.isArray(countriesCodesList) ? countriesCodesList : [];
 
-    return countryList.filter(({ code }) => code === userCountry || countriesCodesList.find(x => x === code));
+    // The registration API supplies the site's allowed countries. This LMS has no country
+    // field there, so the allowlist is empty even though getCountryList() has every country.
+    // An empty allowlist means "no restriction" — show the full localized list. A non-empty
+    // allowlist still limits the dropdown to those codes, plus the user's current country.
+    if (allowedCodes.length === 0) {
+      return countryList;
+    }
+
+    return countryList.filter(({ code }) => code === userCountry || allowedCodes.find(x => x === code));
   },
 );
 
@@ -291,6 +319,9 @@ export const profilePageSelector = createSelector(
   draftSocialLinksByPlatformSelector,
   accountErrorsSelector,
   isAuthenticatedUserProfileSelector,
+  countryMessagesSelector,
+  languageMessagesSelector,
+  educationMessagesSelector,
   (
     account,
     formValues,
@@ -301,6 +332,9 @@ export const profilePageSelector = createSelector(
     draftSocialLinksByPlatform,
     errors,
     isAuthenticatedUserProfile,
+    countryMessages,
+    languageMessages,
+    educationMessages,
   ) => ({
     username: account.username,
     profileImage,
@@ -334,5 +368,10 @@ export const profilePageSelector = createSelector(
     isLoadingProfile,
     photoUploadError: errors.photo || null,
     isAuthenticatedUserProfile,
+
+    // Mapping objects for display names
+    countryMessages,
+    languageMessages,
+    educationMessages,
   }),
 );
