@@ -24,8 +24,6 @@ import('titaned-frontend-library/dist/index.css');
 import('./styles/styles-overrides.scss');
 import('./styles/custom-layout.scss');
 
-
-
 // Design tokens for the custom UI are scoped to this class
 // (tels-brand-openedx paragon/custom_profile.scss).
 const CUSTOM_UI_CLASS = 'tels-custom-profile';
