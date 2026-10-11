@@ -1,7 +1,3 @@
-// Sumac (tels/sumac.1) Education form, used only by CustomProfilePage (custom UI).
-// Verawood redesigned the default profile forms (src/profile/forms); the custom UI keeps the
-// Sumac layout. Shared Verawood pieces (messages, FormControls with stateful_button_plugin_slot,
-// SwitchContent, selectors) are reused so data handling stays on the Verawood code path.
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -10,9 +6,10 @@ import get from 'lodash.get';
 import { Form } from '@openedx/paragon';
 
 import messages from '../forms/Education.messages';
+import emptyOptionMessages from './Country.messages';
 
 // Components
-import FormControls from '../forms/elements/FormControls';
+import FormControls from '../forms/elements/CustomFormControls';
 import EditableItemHeader from './elements/CustomEditableItemHeader';
 import EmptyContent from './elements/CustomEmptyContent';
 import SwitchContent from '../forms/elements/SwitchContent';
@@ -61,7 +58,7 @@ class Education extends React.Component {
 
     return (
       <SwitchContent
-        className="mb-5"
+        className="mb-3"
         expression={editMode}
         cases={{
           editing: (
@@ -82,7 +79,7 @@ class Education extends React.Component {
                     value={levelOfEducation}
                     onChange={this.handleChange}
                   >
-                    <option value="" aria-label="empty">&nbsp;</option>
+                    <option value="" aria-label={this.props.intl.formatMessage(emptyOptionMessages['profile.form.empty.option'])}>&nbsp;</option>
                     {EDUCATION_LEVELS.map(level => (
                       <option key={level} value={level}>
                         {intl.formatMessage(get(

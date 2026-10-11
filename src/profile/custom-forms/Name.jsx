@@ -1,7 +1,3 @@
-// Sumac (tels/sumac.1) Name form, used only by CustomProfilePage (custom UI).
-// Verawood redesigned the default profile forms (src/profile/forms); the custom UI keeps the
-// Sumac layout. Shared Verawood pieces (messages, FormControls with stateful_button_plugin_slot,
-// SwitchContent, selectors) are reused so data handling stays on the Verawood code path.
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -11,7 +7,7 @@ import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import messages from './Name.messages';
 
 // Components
-import FormControls from '../forms/elements/FormControls';
+import FormControls from '../forms/elements/CustomFormControls';
 import EditableItemHeader from './elements/CustomEditableItemHeader';
 import EmptyContent from './elements/CustomEmptyContent';
 import SwitchContent from '../forms/elements/SwitchContent';
@@ -57,7 +53,7 @@ class Name extends React.Component {
 
     return (
       <SwitchContent
-        className="mb-5"
+        className="mb-3"
         expression={editMode}
         cases={{
           editing: (
@@ -77,8 +73,6 @@ class Name extends React.Component {
                   <small className="form-text text-muted" id={`${formId}-help-text`}>
                     {intl.formatMessage(messages['profile.name.details'])}
                   </small>
-                  {/* Verawood no longer edits the full name on this page. Keep the Sumac
-                      help text, and link to Account settings the way the Verawood Name form does. */}
                   {accountSettingsUrl && (
                     <p className="mb-0">
                       <Hyperlink destination={accountSettingsUrl} target="_blank">

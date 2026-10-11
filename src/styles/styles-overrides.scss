@@ -1,60 +1,62 @@
-// Mixins
+// Mixins — use Paragon design tokens from tels-brand-openedx (--pgn-*).
 @mixin card-style1 {
-    border-radius: 1rem;
-    border: 1px solid var(--border-color);
-    background-color: var(--bg-surface);
+    border-radius: var(--pgn-size-border-radius-lg);
+    border: 1px solid var(--border-color, var(--pgn-color-light-400));
+    background-color: var(--bg-surface, var(--pgn-color-bg-base));
 }
 
 @mixin card-style2 {
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
-    background-color: var(--bg-surface);
+    border-radius: var(--pgn-size-border-radius-lg);
+    border: 1px solid var(--border-color, var(--pgn-color-light-400));
+    background-color: var(--bg-surface, var(--pgn-color-bg-base));
 }
 
 @mixin card-style3 {
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    background-color: var(--bg-surface);
+    border-radius: var(--pgn-size-border-radius-base);
+    border: 1px solid var(--border-color, var(--pgn-color-light-400));
+    background-color: var(--bg-surface, var(--pgn-color-bg-base));
 }
 
 @mixin sub-header-title-style1 {
-    font-size: 20px !important;
-    font-weight: 600 !important;
-    line-height: 1.2 !important;
+    font-size: var(--pgn-typography-font-size-h3-base) !important;
+    font-weight: var(--pgn-typography-font-weight-semi-bold) !important;
+    line-height: var(--pgn-typography-line-height-base, 1.2) !important;
     letter-spacing: normal !important;
 }
 
 @mixin section-title-style1 {
-    font-size: 18px !important;
-    font-weight: 500 !important;
-    line-height: 1.2 !important;
+    font-size: var(--pgn-typography-font-size-base) !important;
+    font-weight: var(--pgn-typography-font-weight-semi-bold) !important;
+    line-height: var(--pgn-typography-line-height-base, 1.2) !important;
     letter-spacing: normal !important;
 }
 
 @mixin section-title-style2 {
-    font-size: 16px !important;
-    font-weight: 500 !important;
-    line-height: 1.2 !important;
+    font-size: var(--pgn-typography-font-size-base) !important;
+    font-weight: var(--pgn-typography-font-weight-semi-bold) !important;
+    line-height: var(--pgn-typography-line-height-base, 1.2) !important;
     letter-spacing: normal !important;
 }
 
 @mixin section-title-style3 {
-    font-size: 16px !important;
-    font-weight: 400 !important;
-    line-height: 1.2 !important;
+    font-size: var(--pgn-typography-font-size-base) !important;
+    font-weight: var(--pgn-typography-font-weight-normal) !important;
+    line-height: var(--pgn-typography-line-height-base, 1.2) !important;
     letter-spacing: normal !important;
 }
 
 .customHr {
-    border: 'none';
-    border-top: '1px solid #e5e6e6', ;
-    margin: '0 0 0 0';
-    margin-left: -1rem;
-    margin-right: -1rem;
+    border: none;
+    border-top: 1px solid var(--pgn-color-light-400);
+    margin: 0;
+    margin-left: calc(-1 * var(--pgn-spacing-spacer-3, 1rem));
+    margin-right: calc(-1 * var(--pgn-spacing-spacer-3, 1rem));
 }
 
 .profile-page {
-    padding: 1rem;
+    // No outer padding — L/R + top inset live on .profile-page-container
+    // (tels-content-width + 1rem page top), same as Account / Learner-dashboard.
+    padding: 0;
 
     .profile-avatar {
         @media (min-width: 768px) {
@@ -71,23 +73,24 @@
           margin-bottom: 2rem;
         }
     }
-
-    
 }
 
+// Horizontal padding / max-width come from Paragon Container size="xl"
+// + brand tels-content-width (--pgn-size-container-max-width-xl +
+// half --pgn-spacing-grid-gutter-width). Do not hardcode L/R padding here.
+// Page top inset: 1rem — same as Account + Learner-dashboard custom pages.
 .profile-page-container {
-    padding-left: 4rem;
-    padding-right: 4rem;
-    // background-color: blue;
+    padding-top: 1rem !important;
 
-    @media (max-width: 768px) {
+    // Nested fluid wrappers should not re-introduce padding.
+    .custom-profile-page-fluid-container {
         padding-left: 0;
         padding-right: 0;
     }
 }
 
 .profile-page-bg-banner {
-    border-radius: 8px !important;
+    border-radius: var(--pgn-size-border-radius-lg) !important;
 }
 
 .card-section {
@@ -107,9 +110,9 @@
         }
 
         .edit-button {
-            font-size: 14px;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
+            font-size: var(--pgn-typography-font-size-sm);
+            padding: var(--pgn-spacing-spacer-2, 0.5rem) var(--pgn-spacing-spacer-3, 1rem);
+            border-radius: var(--pgn-size-border-radius-base);
             margin-left: auto;
         }
 
@@ -144,36 +147,37 @@
         text-align: center;
 
         .info-label {
-            font-size: 12px;
-            font-weight: 500;
-            color: var(--text-muted);
+            font-size: var(--pgn-typography-font-size-h6-base);
+            font-weight: var(--pgn-typography-font-weight-semi-bold);
+            color: var(--text-muted, var(--pgn-color-text-light));
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 0.5rem;
+            margin-bottom: var(--pgn-spacing-spacer-2, 0.5rem);
         }
 
         .info-value {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--text-primary);
-            line-height: 1.2;
+            font-size: var(--pgn-typography-font-size-base);
+            font-weight: var(--pgn-typography-font-weight-semi-bold);
+            color: var(--text-primary, var(--pgn-color-text-base));
+            line-height: var(--pgn-typography-line-height-base, 1.2);
             word-break: break-word;
         }
 
         .add-link {
-            color: var(--primary);
-            font-weight: 600;
+            color: var(--primary, var(--pgn-color-primary-base));
+            font-weight: var(--pgn-typography-font-weight-semi-bold);
             cursor: pointer;
             text-decoration: underline;
 
-            &:hover {
-                color: var(--primary-hover);
+            &:hover,
+            &:focus {
+                color: var(--primary-hover, var(--pgn-color-primary-300));
             }
         }
 
         .social-links-count {
-            color: #28a745;
-            font-weight: 600;
+            color: var(--pgn-color-success-base);
+            font-weight: var(--pgn-typography-font-weight-semi-bold);
         }
     }
 }
@@ -184,9 +188,9 @@
 
     .bio-text {
         .bio-paragraph {
-            font-size: 16px;
-            line-height: 1.6;
-            color: #212529;
+            font-size: var(--pgn-typography-font-size-base);
+            line-height: var(--pgn-typography-line-height-base, 1.6);
+            color: var(--pgn-color-text-base);
             margin: 0;
             white-space: pre-wrap;
             word-break: break-word;
@@ -195,26 +199,27 @@
 
     .no-bio-placeholder {
         text-align: center;
-        padding: 2rem 1rem;
+        padding: var(--pgn-spacing-spacer-4, 1.5rem) var(--pgn-spacing-spacer-3, 1rem);
 
         .placeholder-text {
-            font-size: 16px;
-            color: #6c757d;
-            margin-bottom: 1rem;
+            font-size: var(--pgn-typography-font-size-base);
+            color: var(--pgn-color-text-muted, var(--pgn-color-text-light));
+            margin-bottom: var(--pgn-spacing-spacer-3, 1rem);
             font-style: italic;
         }
 
         .add-link {
-            color: #007bff;
-            font-weight: 600;
+            color: var(--pgn-color-primary-base);
+            font-weight: var(--pgn-typography-font-weight-semi-bold);
             cursor: pointer;
             text-decoration: underline;
-            font-size: 14px;
+            font-size: var(--pgn-typography-font-size-sm);
             text-transform: uppercase;
             letter-spacing: 0.5px;
 
-            &:hover {
-                color: #0056b3;
+            &:hover,
+            &:focus {
+                color: var(--pgn-color-primary-700);
             }
         }
     }
@@ -227,32 +232,32 @@
     .certificates-list {
         .certificate-item {
             padding: 1rem;
-            border: 1px solid #e9ecef;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            background-color: #f8f9fa;
+            border: 1px solid var(--pgn-color-light-400);
+            border-radius: var(--pgn-size-border-radius-lg);
+            margin-bottom: var(--pgn-spacing-spacer-3, 1rem);
+            background-color: var(--pgn-color-light-200);
 
             &:last-child {
                 margin-bottom: 0;
             }
 
             .certificate-title {
-                font-size: 16px;
-                font-weight: 600;
-                color: #212529;
+                font-size: var(--pgn-typography-font-size-base);
+                font-weight: var(--pgn-typography-font-weight-semi-bold);
+                color: var(--pgn-color-text-base);
                 margin: 0;
-                line-height: 1.4;
+                line-height: var(--pgn-typography-line-height-base, 1.4);
             }
         }
     }
 
     .no-certificates-placeholder {
         text-align: center;
-        padding: 2rem 1rem;
+        padding: var(--pgn-spacing-spacer-4, 1.5rem) var(--pgn-spacing-spacer-3, 1rem);
 
         .placeholder-text {
-            font-size: 16px;
-            color: #6c757d;
+            font-size: var(--pgn-typography-font-size-base);
+            color: var(--pgn-color-text-muted, var(--pgn-color-text-light));
             margin: 0;
             font-style: italic;
         }
@@ -260,41 +265,53 @@
 }
 
 .card-section-content {
+    // 2rem top gap (--pgn-spacing-spacer-4-5 = 2 × spacer-base).
+    padding-top: var(--pgn-spacing-spacer-4-5, 2rem);
+    // padding-bottom: var(--pgn-spacing-spacer-3, var(--pgn-spacing-spacer-base, 1rem));
+
     .btn-sm {
-        padding: 0.5rem 1rem !important;
+        padding: var(--pgn-spacing-spacer-2, 0.5rem) var(--pgn-spacing-spacer-3, 1rem) !important;
     }
 
     .custom-statefull-button {
         .btn-sm {
-            padding: 0.5rem 1rem !important;
+            padding: var(--pgn-spacing-spacer-2, 0.5rem) var(--pgn-spacing-spacer-3, 1rem) !important;
         }
     }
 
     .list-unstyled {
         a {
-            color: var(--primary);
+            color: var(--primary, var(--pgn-color-primary-base));
 
             &:hover {
-                color: var(--primary-hover);
+                color: var(--primary-hover, var(--pgn-color-primary-300));
             }
         }
+    }
+
+    // Display grids already sat under padding-top; avoid double top pad.
+    .personal-info-grid,
+    .about-me-content,
+    .certificates-content {
+        padding-top: 0;
+        padding-bottom: 0;
     }
 }
 
 .custom-certificate-title-edit-mode {
-    color: var(--text-primary) !important;
-    font-size: 16px !important;
-    font-weight: 600 !important;
-    line-height: 1.2 !important;
-    font-family: sans-serif !important;
+    color: var(--text-primary, var(--pgn-color-text-base)) !important;
+    font-size: var(--pgn-typography-font-size-base) !important;
+    font-weight: var(--pgn-typography-font-weight-semi-bold) !important;
+    line-height: var(--pgn-typography-line-height-base, 1.2) !important;
+    font-family: var(--pgn-typography-font-family-base);
 }
 
 .custom-certificate-organization-edit-mode {
-    color: var(--text-primary) !important;
-    font-size: 16px !important;
-    font-weight: 600 !important;
-    line-height: 1.2 !important;
-    font-family: sans-serif !important;
+    color: var(--text-primary, var(--pgn-color-text-base)) !important;
+    font-size: var(--pgn-typography-font-size-base) !important;
+    font-weight: var(--pgn-typography-font-weight-semi-bold) !important;
+    line-height: var(--pgn-typography-line-height-base, 1.2) !important;
+    font-family: var(--pgn-typography-font-family-base);
 }
 
 // Custom UI (CustomProfilePage only): keep the Sumac look on top of Verawood components.
@@ -310,11 +327,55 @@
         }
     }
 
-    // Avatar "Change" toggle: Paragon 23 spaces the dropdown caret .5em from the text; the Sumac
-    // build (Paragon 22) rendered Bootstrap's .255em, which keeps the button compact inside the avatar.
-    .custom-profile-avatar-dropdown-toggle::after {
-        margin-left: 0.255em;
-        margin-inline-start: 0.255em;
+    // Keep Upload / Change fully readable inside the circle (no spill outside).
+    // Dropdown.Menu uses popper strategy "fixed" so the menu is not clipped.
+    .profile-avatar {
+        overflow: hidden;
+        border-radius: 50%;
+    }
+
+    .profile-avatar-menu-container {
+        overflow: hidden;
+        border-radius: 50%;
+        z-index: 1;
+        align-items: flex-end !important;
+        justify-content: center;
+        // Inset from the rim so the full button (label + padding) fits in the
+        // bottom chord and is not clipped by the round overflow.
+        padding-bottom: var(--pgn-spacing-spacer-3, 1rem) !important;
+        padding-left: var(--pgn-spacing-spacer-3, 1rem);
+        padding-right: var(--pgn-spacing-spacer-3, 1rem);
+        box-sizing: border-box;
+
+        .btn,
+        .dropdown {
+            margin: 0 !important;
+        }
+
+        .dropdown {
+            width: auto;
+            max-width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        // Shared styles for Upload Photo and Change — same size and placement.
+        .custom-profile-avatar-action-btn {
+            width: auto !important;
+            max-width: 100%;
+            margin: 0 !important;
+            padding: var(--pgn-spacing-spacer-1, 0.25rem) var(--pgn-spacing-spacer-2, 0.5rem) !important;
+            font-size: var(--pgn-typography-font-size-sm) !important;
+            line-height: var(--pgn-typography-line-height-base, 1.2) !important;
+            white-space: nowrap;
+            border-radius: var(--pgn-size-btn-border-radius-sm, var(--pgn-size-border-radius-sm)) !important;
+        }
+
+        .custom-profile-avatar-dropdown-toggle::after {
+            // Paragon 23 caret spacing; keep compact like Sumac / Bootstrap.
+            margin-left: 0.255em;
+            margin-inline-start: 0.255em;
+        }
     }
 
     // Verawood enlarged the mobile avatar to 7.5rem; Sumac used 5rem below md (9rem above, set earlier).
@@ -322,6 +383,17 @@
         .profile-avatar {
             width: 5rem;
             height: 5rem;
+        }
+
+        .profile-avatar-menu-container {
+            padding-bottom: var(--pgn-spacing-spacer-2, 0.5rem) !important;
+            padding-left: var(--pgn-spacing-spacer-2, 0.5rem);
+            padding-right: var(--pgn-spacing-spacer-2, 0.5rem);
+
+            .custom-profile-avatar-action-btn {
+                padding: var(--pgn-spacing-spacer-1, 0.25rem) var(--pgn-spacing-spacer-2, 0.5rem) !important;
+                font-size: var(--pgn-typography-font-size-h6-base) !important;
+            }
         }
     }
 }
@@ -346,20 +418,21 @@
     }
 }
 
-// Responsive design for mobile
+// Responsive design for mobile — 768px = --pgn-size-breakpoint-md
+// (custom props cannot be used in @media queries).
 @media (max-width: 768px) {
     .personal-info-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 1.5rem;
-        padding: 0.5rem 0;
+        gap: var(--pgn-spacing-spacer-3-5, 1.25rem);
+        padding: var(--pgn-spacing-spacer-2, 0.5rem) 0;
 
         .info-column {
             .info-label {
-                font-size: 11px;
+                font-size: var(--pgn-typography-font-size-h6-base);
             }
 
             .info-value {
-                font-size: 14px;
+                font-size: var(--pgn-typography-font-size-sm);
             }
         }
     }
@@ -367,7 +440,7 @@
     .card-section-header {
         flex-direction: column;
         align-items: flex-start;
-        gap: 1rem;
+        gap: var(--pgn-spacing-spacer-3, 1rem);
 
         .edit-button {
             align-self: flex-end;
@@ -375,45 +448,45 @@
     }
 
     .about-me-content {
-        padding: 0.5rem 0;
+        padding: var(--pgn-spacing-spacer-2, 0.5rem) 0;
 
         .bio-text {
             .bio-paragraph {
-                font-size: 18px;
+                font-size: var(--pgn-typography-font-size-base);
             }
         }
 
         .no-bio-placeholder {
-            padding: 1.5rem 0.5rem;
+            padding: var(--pgn-spacing-spacer-3-5, 1.25rem) var(--pgn-spacing-spacer-2, 0.5rem);
 
             .placeholder-text {
-                font-size: 14px;
+                font-size: var(--pgn-typography-font-size-sm);
             }
 
             .add-link {
-                font-size: 12px;
+                font-size: var(--pgn-typography-font-size-h6-base);
             }
         }
     }
 
     .certificates-content {
-        padding: 0.5rem 0;
+        padding: var(--pgn-spacing-spacer-2, 0.5rem) 0;
 
         .certificates-list {
             .certificate-item {
-                padding: 0.75rem;
+                padding: var(--pgn-spacing-spacer-2-5, 0.75rem);
 
                 .certificate-title {
-                    font-size: 14px;
+                    font-size: var(--pgn-typography-font-size-sm);
                 }
             }
         }
 
         .no-certificates-placeholder {
-            padding: 1.5rem 0.5rem;
+            padding: var(--pgn-spacing-spacer-3-5, 1.25rem) var(--pgn-spacing-spacer-2, 0.5rem);
 
             .placeholder-text {
-                font-size: 14px;
+                font-size: var(--pgn-typography-font-size-sm);
             }
         }
     }
@@ -423,11 +496,118 @@
         padding-right: 0;
     }
 
-    .profile-avatar-menu-container {
-        .custom-profile-avatar-dropdown-toggle {
-            padding: 0.5rem 1rem !important;
-            margin-left: 12rem !important;
-            font-size: 14px !important;
-        }
+}
+
+// ---------------------------------------------------------------------------
+// Custom UI shapes and sizes from the design tokens (--pgn-*).
+.tels-custom-profile {
+  // Shapes and sizes: titaned-frontend-library hardcodes these for Paragon /
+  // Bootstrap components (e.g. 1rem radios against Paragon's 20px min-width,
+  // which drew them as ovals). Use the design tokens instead.
+  .pgn__form-checkbox-input,
+  .pgn__form-radio-input {
+    width: var(--pgn-size-form-control-indicator-base);
+    height: var(--pgn-size-form-control-indicator-base);
+    min-width: var(--pgn-size-form-control-indicator-base);
+    min-height: var(--pgn-size-form-control-indicator-base);
+    flex-shrink: 0;
+  }
+
+  .pgn__form-radio-input {
+    border-radius: 50%;
+  }
+
+  // Focused/selected Paragon Menu item: brand tint from the existing
+  // primary-light token (the menu token keeps its Paragon default).
+  .pgn__menu-item:focus {
+    background-color: var(--pgn-color-primary-light);
+  }
+
+  // Indicator centered on its label (Paragon offsets it with a fixed
+  // margin-top, which drifts when the label font/line-height changes).
+  // Options with a description keep the top alignment.
+  .pgn__form-checkbox:not(:has(.pgn__form-control-description)),
+  .pgn__form-radio:not(:has(.pgn__form-control-description)) {
+    display: flex;
+    align-items: center;
+
+    > .pgn__form-checkbox-input,
+    > .pgn__form-radio-input {
+      margin-top: 0;
+      margin-bottom: 0;
     }
+
+    .pgn__form-label {
+      margin-bottom: 0;
+    }
+  }
+
+  // Page content and modals only: the header/sidebar keep their own shapes
+  // (pill language selector, user menu).
+  .main-content,
+  .pgn__modal-layer {
+    .btn:not(.btn-icon) {
+      border-radius: var(--pgn-size-btn-border-radius-base) !important;
+    }
+
+    .btn-sm:not(.btn-icon) {
+      border-radius: var(--pgn-size-btn-border-radius-sm) !important;
+    }
+
+    .btn-lg:not(.btn-icon) {
+      border-radius: var(--pgn-size-btn-border-radius-lg) !important;
+    }
+
+    // Button groups stay joined (only the outer corners are rounded).
+    .btn-group > .btn:not(:last-child):not(.dropdown-toggle):not(.btn-icon),
+    .btn-group > .btn-group:not(:last-child) > .btn:not(.btn-icon) {
+      border-top-right-radius: 0 !important;
+      border-bottom-right-radius: 0 !important;
+    }
+
+    .btn-group > .btn:not(:first-child):not(.btn-icon),
+    .btn-group > .btn-group:not(:first-child) > .btn:not(.btn-icon) {
+      border-top-left-radius: 0 !important;
+      border-bottom-left-radius: 0 !important;
+    }
+
+    .form-control,
+    .pgn__form-control-decorator-group .form-control {
+      border-radius: var(--pgn-size-form-input-radius-border-base);
+    }
+
+    .card,
+    .pgn__card {
+      border-radius: var(--pgn-size-card-border-radius-base);
+    }
+
+    .badge {
+      border-radius: var(--pgn-size-badge-border-radius-base);
+    }
+
+    .alert {
+      border-radius: var(--pgn-size-alert-border-radius);
+    }
+
+    .dropdown-menu {
+      border-radius: var(--pgn-size-dropdown-border-radius-base);
+    }
+
+    .modal-content,
+    .pgn__modal {
+      border-radius: var(--pgn-size-modal-content-border-radius);
+    }
+
+    .pgn__selectable_box {
+      border-radius: var(--pgn-size-border-radius-base);
+    }
+  }
+}
+
+// Collapsed (read-only) sections: equal space above and below the content —
+// 1rem after the divider (same as the header's bottom gap) and the card's own
+// 1rem padding below. The edit view keeps the 2rem top gap.
+.card-section-content:has(> .personal-info-grid, > .about-me-content, > .certificates-content) {
+    padding-top: var(--pgn-spacing-spacer-3);
+    padding-bottom: 0;
 }

@@ -1,9 +1,3 @@
-// Sumac (tels/sumac.1) Certificates form, used only by CustomProfilePage (custom UI).
-// Verawood redesigned the default profile forms (src/profile/forms); the custom UI keeps the
-// Sumac layout. Shared Verawood pieces (messages, FormControls with stateful_button_plugin_slot,
-// SwitchContent, selectors) are reused so data handling stays on the Verawood code path.
-// Verawood removed course-certificate visibility from the profile data layer (it can no longer be
-// saved), so the editable/empty modes render like 'static' (no Edit button / visibility line).
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -16,7 +10,7 @@ import get from 'lodash.get';
 import messages from '../Certificates.messages';
 
 // Components
-import FormControls from '../forms/elements/FormControls';
+import FormControls from '../forms/elements/CustomFormControls';
 import EditableItemHeader from './elements/CustomEditableItemHeader';
 import SwitchContent from '../forms/elements/SwitchContent';
 
@@ -142,8 +136,7 @@ class Certificates extends React.Component {
 
     return (
       <SwitchContent
-        className="mb-4"
-        // Verawood cannot save certificate visibility any more, so never show the edit/visibility UI.
+        className="mb-3"
         // expression={editMode}
         expression={editMode ? 'static' : editMode}
         cases={{

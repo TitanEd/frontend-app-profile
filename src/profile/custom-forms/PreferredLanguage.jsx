@@ -1,7 +1,3 @@
-// Sumac (tels/sumac.1) PreferredLanguage form, used only by CustomProfilePage (custom UI).
-// Verawood redesigned the default profile forms (src/profile/forms); the custom UI keeps the
-// Sumac layout. Shared Verawood pieces (messages, FormControls with stateful_button_plugin_slot,
-// SwitchContent, selectors) are reused so data handling stays on the Verawood code path.
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -11,7 +7,7 @@ import { Form } from '@openedx/paragon';
 import messages from './PreferredLanguage.messages';
 
 // Components
-import FormControls from '../forms/elements/FormControls';
+import FormControls from '../forms/elements/CustomFormControls';
 import EditableItemHeader from './elements/CustomEditableItemHeader';
 import EmptyContent from './elements/CustomEmptyContent';
 import SwitchContent from '../forms/elements/SwitchContent';
@@ -75,7 +71,7 @@ class PreferredLanguage extends React.Component {
 
     return (
       <SwitchContent
-        className="mb-5"
+        className="mb-3"
         expression={editMode}
         cases={{
           editing: (
@@ -96,7 +92,7 @@ class PreferredLanguage extends React.Component {
                     value={value}
                     onChange={this.handleChange}
                   >
-                    <option value="" aria-label="empty">&nbsp;</option>
+                    <option value="" aria-label={this.props.intl.formatMessage(messages['profile.form.empty.option'])}>&nbsp;</option>
                     {sortedLanguages.map(({ code, name }) => (
                       <option key={code} value={code}>{name}</option>
                     ))}

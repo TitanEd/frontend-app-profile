@@ -1,5 +1,3 @@
-// Verawood Name messages plus the Sumac help text ('profile.name.details') that Verawood removed,
-// and the Sumac label wording (Verawood changed the default text of the same message id).
 import { defineMessages } from '@edx/frontend-platform/i18n';
 import verawoodMessages from '../forms/Name.messages';
 

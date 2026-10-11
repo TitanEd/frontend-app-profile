@@ -1,7 +1,3 @@
-// Sumac (tels/sumac.1) EditableItemHeader (label with right-aligned Edit button), used only by CustomProfilePage (custom UI).
-// Verawood redesigned the default profile forms (src/profile/forms); the custom UI keeps the
-// Sumac layout. Shared Verawood pieces (messages, FormControls with stateful_button_plugin_slot,
-// SwitchContent, selectors) are reused so data handling stays on the Verawood code path.
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -17,15 +13,17 @@ const EditableItemHeader = ({
   onClickEdit,
   headingId,
 }) => {
-  // Verawood: hide the visibility line when DISABLE_VISIBILITY_EDITING is set.
   const isVisibilityEnabled = useIsVisibilityEnabled();
   return (
     <div className="editable-item-header mb-2">
-      <h2 className="edit-section-header" id={headingId}>
-        {content}
-        {showEditButton ? <EditButton style={{ marginTop: '-.35rem' }} className="float-right" onClick={onClickEdit} /> : null}
-      </h2>
-      {/* {showVisibility ? <p className="mb-0"><Visibility to={visibility} /></p> : null} */}
+      <div className="d-flex align-items-center justify-content-between">
+        <h2 className="edit-section-header mb-0" id={headingId}>
+          {content}
+        </h2>
+        {showEditButton ? (
+          <EditButton style={{ marginTop: '-.35rem' }} onClick={onClickEdit} />
+        ) : null}
+      </div>
       {showVisibility && isVisibilityEnabled ? <p className="mb-0"><Visibility to={visibility} /></p> : null}
     </div>
   );

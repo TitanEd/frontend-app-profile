@@ -60,7 +60,7 @@ const CertificateCard = ({
               ))}
             </p>
             <p className={classNames([
-              'm-0 color-black custom-certificate-title-edit-mode',
+              'm-0 color-black',
               isMobileView ? 'h5' : 'h4',
             ])}
             >
@@ -76,7 +76,7 @@ const CertificateCard = ({
                 defaultMessage="From"
               />
             </p>
-            <h5 className="mb-0 color-black custom-certificate-organization-edit-mode">{courseOrganization}</h5>
+            <h5 className="mb-0 color-black">{courseOrganization}</h5>
             <p className={classNames([
               'mb-0',
               isMobileView ? 'x-small' : 'small',

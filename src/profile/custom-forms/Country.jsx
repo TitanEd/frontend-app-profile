@@ -1,9 +1,3 @@
-// Sumac (tels/sumac.1) Country form, used only by CustomProfilePage (custom UI).
-// Verawood redesigned the default profile forms (src/profile/forms); the custom UI keeps the
-// Sumac layout. Shared Verawood pieces (messages, FormControls with stateful_button_plugin_slot,
-// SwitchContent, selectors) are reused so data handling stays on the Verawood code path.
-// Verawood: options come from translatedCountries (filtered to the site's country list) and
-// countries not in countriesCodesList are disabled, as in the Verawood Country form.
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -13,13 +7,13 @@ import { Form } from '@openedx/paragon';
 import messages from './Country.messages';
 
 // Components
-import FormControls from '../forms/elements/FormControls';
+import FormControls from '../forms/elements/CustomFormControls';
 import EditableItemHeader from './elements/CustomEditableItemHeader';
 import EmptyContent from './elements/CustomEmptyContent';
 import SwitchContent from '../forms/elements/SwitchContent';
 
 // Selectors
-import { countrySelector } from '../data/selectors';
+import { customCountrySelector } from '../data/customSelectors';
 
 class Country extends React.Component {
   constructor(props) {
@@ -69,7 +63,7 @@ class Country extends React.Component {
 
     return (
       <SwitchContent
-        className="mb-5"
+        className="mb-3"
         expression={editMode}
         cases={{
           editing: (
@@ -91,7 +85,7 @@ class Country extends React.Component {
                     value={country}
                     onChange={this.handleChange}
                   >
-                    <option value="" aria-label="empty">&nbsp;</option>
+                    <option value="" aria-label={this.props.intl.formatMessage(messages['profile.form.empty.option'])}>&nbsp;</option>
                     {/* {sortedCountries.map(({ code, name }) => (
                       <option key={code} value={code}>{name}</option>
                     ))} */}
@@ -200,6 +194,6 @@ Country.defaultProps = {
 };
 
 export default connect(
-  countrySelector,
+  customCountrySelector,
   {},
 )(injectIntl(Country));
