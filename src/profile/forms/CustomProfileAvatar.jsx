@@ -1,7 +1,3 @@
-// Sumac (tels/sumac.1) profile avatar, used only by CustomProfilePage.
-// Verawood replaced this UI with a camera icon button (forms/ProfileAvatar.jsx); the custom UI
-// keeps the Sumac "Upload Photo" overlay and "Change" (Upload Photo / Remove) menu.
-// The overlay styles (.profile-avatar-menu-container) still ship in src/profile/index.scss.
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Dropdown } from '@openedx/paragon';
@@ -61,9 +57,9 @@ class CustomProfileAvatar extends React.Component {
     if (this.props.isDefault) {
       return (
         <Button
-          variant="link"
+          variant="primary"
           size="sm"
-          className="text-white btn-block"
+          className="custom-profile-avatar-action-btn"
           onClick={this.onClickUpload}
         >
           <FormattedMessage
@@ -77,10 +73,14 @@ class CustomProfileAvatar extends React.Component {
 
     return (
       <Dropdown>
-        <Dropdown.Toggle className="custom-profile-avatar-dropdown-toggle">
+        <Dropdown.Toggle
+          size="sm"
+          className="custom-profile-avatar-action-btn custom-profile-avatar-dropdown-toggle"
+        >
           {intl.formatMessage(messages['profile.profileavatar.change-button'])}
         </Dropdown.Toggle>
-        <Dropdown.Menu>
+        {/* Fixed strategy so the menu is not clipped by the circular overflow:hidden. */}
+        <Dropdown.Menu popperConfig={{ strategy: 'fixed' }}>
           <Dropdown.Item type="button" onClick={this.onClickUpload}>
             <FormattedMessage
               id="profile.profileavatar.upload-button"

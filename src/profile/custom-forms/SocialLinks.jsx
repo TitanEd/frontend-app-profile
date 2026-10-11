@@ -1,8 +1,3 @@
-// Sumac (tels/sumac.1) SocialLinks form, used only by CustomProfilePage (custom UI).
-// Verawood redesigned the default profile forms (src/profile/forms); the custom UI keeps the
-// Sumac layout. Shared Verawood pieces (messages, FormControls with stateful_button_plugin_slot,
-// SwitchContent, selectors) are reused so data handling stays on the Verawood code path.
-// Verawood: the LMS returns the 'x' platform (was 'twitter'), so the platform list matches Verawood.
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Alert } from '@openedx/paragon';
@@ -16,7 +11,7 @@ import classNames from 'classnames';
 import messages from '../forms/SocialLinks.messages';
 
 // Components
-import FormControls from '../forms/elements/FormControls';
+import FormControls from '../forms/elements/CustomFormControls';
 import EditableItemHeader from './elements/CustomEditableItemHeader';
 import EmptyContent from './elements/CustomEmptyContent';
 import SwitchContent from '../forms/elements/SwitchContent';
@@ -27,25 +22,25 @@ import { editableFormSelector } from '../data/selectors';
 const platformDisplayInfo = {
   facebook: {
     icon: faFacebook,
-    name: 'Facebook',
+    nameMessage: 'profile.sociallinks.platform.facebook',
   },
-  // twitter: {
-  //   icon: faTwitter,
-  //   name: 'Twitter',
-  // },
   x: {
     icon: faXTwitter,
-    name: 'X (Twitter)',
+    nameMessage: 'profile.sociallinks.platform.x',
   },
   linkedin: {
     icon: faLinkedin,
-    name: 'LinkedIn',
+    nameMessage: 'profile.sociallinks.platform.linkedin',
   },
 };
 
+const getPlatformName = (intl, platform) => (
+  intl.formatMessage(messages[platformDisplayInfo[platform].nameMessage])
+);
+
 const SocialLink = ({ url, name, platform }) => (
   <a href={url} className="font-weight-bold">
-    <FontAwesomeIcon className="mr-2" icon={platformDisplayInfo[platform].icon} />
+    <FontAwesomeIcon className="mr-2" icon={platformDisplayInfo[platform].icon} aria-hidden="true" />
     {name}
   </a>
 );
@@ -62,7 +57,12 @@ const EditableListItem = ({
   const linkDisplay = url ? (
     <SocialLink name={name} url={url} platform={platform} />
   ) : (
-    <EmptyContent onClick={onClickEmptyContent}>Add {name}</EmptyContent>
+    <EmptyContent onClick={onClickEmptyContent}>
+      <FormattedMessage
+        {...messages['profile.sociallinks.add']}
+        values={{ network: name }}
+      />
+    </EmptyContent>
   );
 
   return <li className="form-group">{linkDisplay}</li>;
@@ -113,12 +113,8 @@ const EmptyListItem = ({ onClick, name }) => (
   <li className="mb-4">
     <EmptyContent onClick={onClick}>
       <FormattedMessage
-        id="profile.sociallinks.add"
-        defaultMessage="Add {network}"
-        values={{
-          network: name,
-        }}
-        description="{network} is the name of a social network such as Facebook or Twitter"
+        {...messages['profile.sociallinks.add']}
+        values={{ network: name }}
       />
     </EmptyContent>
   </li>
@@ -191,7 +187,6 @@ class SocialLinks extends React.Component {
   }
 
   mergeWithDrafts(newSocialLink) {
-    // Sumac saved the 'twitter' platform. Verawood's account API returns and expects 'x'.
     // const knownPlatforms = ['twitter', 'facebook', 'linkedin'];
     const knownPlatforms = ['x', 'facebook', 'linkedin'];
     const draftsByPlatform = this.props.draftSocialLinksByPlatform || {};
@@ -202,7 +197,6 @@ class SocialLinks extends React.Component {
       } else if (draftsByPlatform[platform] !== undefined) {
         updated.push(draftsByPlatform[platform]);
       } else {
-        // Keep a committed link that has not been edited yet. Sumac only copied drafts, which
         // dropped sibling platforms (including X) when one field was saved.
         const committed = (this.props.socialLinks || []).find((link) => link.platform === platform);
         if (committed && committed.socialLink) {
@@ -220,7 +214,7 @@ class SocialLinks extends React.Component {
 
     return (
       <SwitchContent
-        className="mb-5"
+        className="mb-3"
         expression={editMode}
         cases={{
           empty: (
@@ -231,7 +225,7 @@ class SocialLinks extends React.Component {
                   <EmptyListItem
                     key={platform}
                     onClick={this.handleOpen}
-                    name={platformDisplayInfo[platform].name}
+                    name={getPlatformName(intl, platform)}
                   />
                 ))}
               </ul>
@@ -248,7 +242,7 @@ class SocialLinks extends React.Component {
                   .map(({ platform, socialLink }) => (
                     <StaticListItem
                       key={platform}
-                      name={platformDisplayInfo[platform].name}
+                      name={getPlatformName(intl, platform)}
                       url={socialLink}
                       platform={platform}
                     />
@@ -270,7 +264,7 @@ class SocialLinks extends React.Component {
                   <EditableListItem
                     key={platform}
                     platform={platform}
-                    name={platformDisplayInfo[platform].name}
+                    name={getPlatformName(intl, platform)}
                     url={socialLink}
                     onClickEmptyContent={this.handleOpen}
                   />
@@ -298,7 +292,7 @@ class SocialLinks extends React.Component {
                   {socialLinks.map(({ platform, socialLink }) => (
                     <EditingListItem
                       key={platform}
-                      name={platformDisplayInfo[platform].name}
+                      name={getPlatformName(intl, platform)}
                       platform={platform}
                       value={socialLink}
                       /* TODO: Per-field errors: error={error !== null ? error[platform] : null} */
