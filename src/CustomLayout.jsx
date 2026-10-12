@@ -17,6 +17,7 @@ import customGetUserMenuItems from './library/utils/customGetUserMenuItems';
 import getLearnerDashboardUrl from './library/utils/getLearnerDashboardUrl';
 import CustomAppRoutes from './routes/CustomAppRoutes';
 import messages from './messages';
+import HeaderExtras, { headerUser } from './customHeaderExtras';
 
 // Custom UI styles load after the stock Verawood styles (as in the previous
 // version), so on equal specificity the custom rules win.
@@ -123,13 +124,8 @@ const CustomLayout = () => {
     };
   }, []);
 
-  const updatedAuthenticatedUser = {
-    ...authenticatedUser,
-    username: userMenuItemsFromAPI?.username || authenticatedUser?.username,
-    avatar: userMenuItemsFromAPI?.profile_image?.has_image
-      ? userMenuItemsFromAPI.profile_image.image_url_small
-      : authenticatedUser?.avatar,
-  };
+  // Full name and profile picture, as the header shows them (customHeaderExtras.jsx).
+  const updatedAuthenticatedUser = headerUser(authenticatedUser, userMenuItemsFromAPI);
 
   const userMenuItems = customGetUserMenuItems({
     intl,
@@ -158,6 +154,7 @@ const CustomLayout = () => {
             headerButtons={headerButtons}
             languageSelectorList={languageSelectorList}
           />
+          <HeaderExtras />
         </div>
         <div className="content-wrapper">
           <div className="sidebar-container">
