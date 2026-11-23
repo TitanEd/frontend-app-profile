@@ -21,6 +21,7 @@ import {
 } from './data/actions';
 import { customSaveProfilePhoto } from './data/customActions';
 import { customProfilePageSelector } from './data/customSelectors';
+import { currentlyEditingFieldSelector } from './data/selectors';
 import withParams from '../utils/hoc';
 
 // Components
@@ -89,6 +90,7 @@ const CustomProfilePage = ({ params }) => {
   const [isEditingPersonalInfo, setIsEditingPersonalInfo] = useState(false);
   const [isEditingAboutMe, setIsEditingAboutMe] = useState(false);
   const [isEditingCertificates, setIsEditingCertificates] = useState(false);
+  const currentlyEditingField = useSelector(currentlyEditingFieldSelector);
 
   useEffect(() => {
     const { CREDENTIALS_BASE_URL } = context.config;
@@ -126,6 +128,24 @@ const CustomProfilePage = ({ params }) => {
   const handleOpen = useCallback((formId) => {
     dispatch(openForm(formId));
   }, [dispatch]);
+
+  // TSD-70: the card button opens/closes the bio form itself, so Bio shows the text box straight away.
+  const toggleAboutMe = useCallback(() => {
+    if (isEditingAboutMe) {
+      handleClose('bio');
+      setIsEditingAboutMe(false);
+    } else {
+      setIsEditingAboutMe(true);
+      handleOpen('bio');
+    }
+  }, [isEditingAboutMe, handleClose, handleOpen]);
+
+  // Leave edit mode when the bio form closes on its own (Save or its Cancel).
+  useEffect(() => {
+    if (isEditingAboutMe && currentlyEditingField !== 'bio') {
+      setIsEditingAboutMe(false);
+    }
+  }, [isEditingAboutMe, currentlyEditingField]);
 
   const handleSubmit = useCallback((formId) => {
     dispatch(saveProfile(formId, authenticatedUserName));
@@ -364,7 +384,7 @@ const CustomProfilePage = ({ params }) => {
                       <Button
                         variant="outline-primary"
                         size="sm"
-                        onClick={() => setIsEditingAboutMe(!isEditingAboutMe)}
+                        onClick={toggleAboutMe}
                         className="edit-button"
                       >
                         {isEditingAboutMe ? intl.formatMessage(customProfileMessages['profile.aboutMe.cancel']) : intl.formatMessage(customProfileMessages['profile.aboutMe.edit'])}
@@ -373,7 +393,7 @@ const CustomProfilePage = ({ params }) => {
                       <Button
                         variant={isEditingAboutMe ? 'outline-primary' : 'primary'}
                         size="sm"
-                        onClick={() => setIsEditingAboutMe(!isEditingAboutMe)}
+                        onClick={toggleAboutMe}
                         className="edit-button"
                       >
                         {isEditingAboutMe ? intl.formatMessage(customProfileMessages['profile.aboutMe.cancel']) : intl.formatMessage(customProfileMessages['profile.aboutMe.add'])}
