@@ -60,7 +60,7 @@ class Bio extends React.Component {
                   controlId={formId}
                   isInvalid={error !== null}
                 >
-                  <label className="edit-section-header" htmlFor={formId}>
+                  <label className="edit-section-header sr-only" htmlFor={formId}>
                     {intl.formatMessage(messages['profile.bio.about.me'])}
                   </label>
                   <textarea
