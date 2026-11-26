@@ -85,7 +85,7 @@ class Country extends React.Component {
                     value={country}
                     onChange={this.handleChange}
                   >
-                    <option value="" aria-label={this.props.intl.formatMessage(messages['profile.form.empty.option'])}>&nbsp;</option>
+                    <option value="">{intl.formatMessage(messages['profile.country.placeholder'])}</option>
                     {/* {sortedCountries.map(({ code, name }) => (
                       <option key={code} value={code}>{name}</option>
                     ))} */}

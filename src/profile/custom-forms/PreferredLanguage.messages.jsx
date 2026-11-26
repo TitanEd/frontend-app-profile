@@ -12,6 +12,11 @@ const customMessages = defineMessages({
     defaultMessage: 'Select an option',
     description: 'Accessible label for an empty select option in custom profile forms',
   },
+  'profile.preferredlanguage.placeholder': {
+    id: 'tels.profile.preferredlanguage.placeholder',
+    defaultMessage: 'Select a language',
+    description: 'Placeholder text for the empty preferred language select option on the profile page',
+  },
 });
 
 const messages = { ...verawoodMessages, ...customMessages };

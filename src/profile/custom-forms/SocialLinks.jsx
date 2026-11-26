@@ -8,7 +8,7 @@ import { faXTwitter, faFacebook, faLinkedin } from '@fortawesome/free-brands-svg
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import classNames from 'classnames';
 
-import messages from '../forms/SocialLinks.messages';
+import messages from './SocialLinks.messages';
 
 // Components
 import FormControls from '../forms/elements/CustomFormControls';
@@ -80,7 +80,7 @@ EditableListItem.defaultProps = {
 };
 
 const EditingListItem = ({
-  platform, name, value, onChange, error,
+  platform, name, value, onChange, error, placeholder,
 }) => (
   <li className="form-group">
     <label htmlFor={`social-${platform}`}>{name}</label>
@@ -91,6 +91,7 @@ const EditingListItem = ({
       name={platform}
       value={value || ''}
       onChange={onChange}
+      placeholder={placeholder}
       aria-describedby="social-error-feedback"
     />
   </li>
@@ -102,6 +103,7 @@ EditingListItem.propTypes = {
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   error: PropTypes.string,
+  placeholder: PropTypes.string.isRequired,
 };
 
 EditingListItem.defaultProps = {
@@ -297,6 +299,7 @@ class SocialLinks extends React.Component {
                       value={socialLink}
                       /* TODO: Per-field errors: error={error !== null ? error[platform] : null} */
                       onChange={this.handleChange}
+                      placeholder={intl.formatMessage(messages['profile.sociallinks.placeholder'])}
                     />
                   ))}
                 </ul>

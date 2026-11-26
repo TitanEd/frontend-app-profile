@@ -5,8 +5,7 @@ import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/
 import get from 'lodash.get';
 import { Form } from '@openedx/paragon';
 
-import messages from '../forms/Education.messages';
-import emptyOptionMessages from './Country.messages';
+import messages from './Education.messages';
 
 // Components
 import FormControls from '../forms/elements/CustomFormControls';
@@ -79,7 +78,7 @@ class Education extends React.Component {
                     value={levelOfEducation}
                     onChange={this.handleChange}
                   >
-                    <option value="" aria-label={this.props.intl.formatMessage(emptyOptionMessages['profile.form.empty.option'])}>&nbsp;</option>
+                    <option value="">{intl.formatMessage(messages['profile.education.placeholder'])}</option>
                     {EDUCATION_LEVELS.map(level => (
                       <option key={level} value={level}>
                         {intl.formatMessage(get(
