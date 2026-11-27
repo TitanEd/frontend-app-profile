@@ -69,6 +69,7 @@ class Bio extends React.Component {
                     name={formId}
                     value={bio}
                     onChange={this.handleChange}
+                    placeholder={intl.formatMessage(messages['profile.bio.placeholder'])}
                   />
                   {error !== null && (
                     <Form.Control.Feedback hasIcon={false}>
